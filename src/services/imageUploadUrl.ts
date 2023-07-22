@@ -1,4 +1,4 @@
-import { interfaces, Environments } from '../utils';
+import { interfaces, Environments, constants } from '../utils';
 import { getStorageObjectUrl } from '../config';
 
 const getPreSignedImageUploadUrl = async (key: string, type: string, length: number): Promise<string | undefined> => {
@@ -7,8 +7,8 @@ const getPreSignedImageUploadUrl = async (key: string, type: string, length: num
         key,
         type,
         length,
-        acl: '',
-        expiresIn: 300
+        acl: constants.IMAGE_PRESIGNED_URL_ACL,
+        expiresIn: constants.IMAGE_PRESIGNED_URL_EXPIRED_SECONDS
     }
     const url = await getStorageObjectUrl(param);
     return url;

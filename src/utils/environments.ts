@@ -30,5 +30,16 @@ export default {
         s3Region: process.env.AWS_S3_REGION || 'TEMP_REGION',
         s3Bucket: process.env.AWS_S3_BUCKET || 'TEMP_BUCKET'
     },
+    redis: {
+        host: process.env.REDIS_HOST || 'REDIS_HOST',
+        port: Number(process.env.REDIS_PORT) || 6379, 
+        username: process.env.REDIS_USERNAME || 'REDIS_USERNAME',
+        password: process.env.REDIS_PASSWORD || 'REDIS_PASSWORD',
+        channels: {
+            userCreatedProfile: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE || 'user-created-profile', 
+            userCreatedProfileError: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE_ERROR || 'user-created-profile-error', 
+        },
+        connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
+    },
     email: process.env.email || 'temp email'
 };

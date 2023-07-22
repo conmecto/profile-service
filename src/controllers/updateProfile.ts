@@ -1,21 +1,33 @@
-import { interfaces, validationSchema, constants, enums } from '../utils';
-import { CustomError, updateUserProfile } from '../services';
+import { interfaces, validationSchema, constants, enums, helpers } from '../utils';
+import { CustomError, updateUserProfile, setKey, getProfileCache, searchCity } from '../services';
 
 const updateProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
-    const userId: number = req._user?.id;
-    const paramsUserId = Number(req.params.userId);
-    if (isNaN(paramsUserId) || userId !== paramsUserId) {
-        throw new CustomError(enums.StatusCodes.UNAUTHORIZED, enums.Errors.UNAUTHORIZED_REQUEST);
+    const userId = Number(req.user.id);
+    await validationSchema.profileIdParamSchema.validateAsync(req.params);
+    const profileId = Number(req.params['id']);
+    const res = {
+        message: constants.PROFILE_UPDATED
+    }
+    if (!Object.keys(req.body).length) {
+        return res;
     }
     const profileUpdateObj = <interfaces.IProfileUpdateObject>req.body;
     await validationSchema.profileUpdateSchema.validateAsync(profileUpdateObj);    
-    const res = await updateUserProfile(userId, profileUpdateObj);
-    if (!res) {
+    if (profileUpdateObj.location) {
+        const checkCity = await searchCity(profileUpdateObj.location);
+        if (!checkCity) {
+            throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.CITY_NOT_FOUND);
+        }
+    }
+    const profileUpdateRes = await updateUserProfile(profileId, userId, profileUpdateObj);
+    if (!profileUpdateRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);
     }
-    return {
-        message: constants.PROFILE_UPDATED
-    }
+    const profileCacheKey = helpers.buildProfileCacheKey(profileId, userId);
+    const profileCache = await getProfileCache(profileCacheKey);
+    const profileCacheUpdateValue = profileCache ? JSON.stringify({ ...profileCache, ...profileUpdateObj }) : JSON.stringify(profileCache);
+    await setKey(profileCacheKey, profileCacheUpdateValue);
+    return res;
 }
 
 export default updateProfile;

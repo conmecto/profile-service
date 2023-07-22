@@ -1,5 +1,5 @@
 import updateProfile from './updateProfile';
-import getImageUploadUrl from './getImageUploadUrl';
+import generateImageUploadUrl from './generateImageUploadUrl';
 import getUserProfile from './getUserProfile';
 
-export { updateProfile, getImageUploadUrl, getUserProfile }
+export { updateProfile, generateImageUploadUrl, getUserProfile }

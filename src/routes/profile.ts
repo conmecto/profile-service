@@ -1,20 +1,21 @@
 import { Request, Response, Router, NextFunction } from 'express';
-import { requestUtils, enums } from '../utils'; 
-import { updateProfile, getImageUploadUrl, getUserProfile } from '../controllers';
+import { requestUtils, enums, interfaces } from '../utils'; 
+import { updateProfile, generateImageUploadUrl, getUserProfile } from '../controllers';
+import { parseUserMiddleware } from '../middlewares';
 
 const profileRouter = Router();
 
-profileRouter.post('/image', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.post('/:id/image-upload-url', parseUserMiddleware, async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await getImageUploadUrl(filteredRequest);
-        res.status(enums.StatusCodes.CREATED).send(controllerResponse);    
+        const controllerResponse = await generateImageUploadUrl(filteredRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
     }
 });
 
-profileRouter.patch('', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.patch('/:id', parseUserMiddleware, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateProfile(filteredRequest);
@@ -24,7 +25,7 @@ profileRouter.patch('', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
-profileRouter.get('', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('/:id', parseUserMiddleware, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserProfile(filteredRequest);

@@ -1,22 +1,35 @@
-import { object, string } from 'joi';
+import Joi from 'joi';
+import { IMAGE_MAX_SIZE_BYTES } from './constants';
+import { ImageMimetypes } from './enums';
 
-const uploadImageSchema = object({
-    email: string().email().required() 
+const uploadImageSchema = Joi.object({
+    size: Joi.number().max(IMAGE_MAX_SIZE_BYTES).required(),
+    mimetype: Joi.string().valid(...Object.values(ImageMimetypes)).required(),
+    filename: Joi.string().required()
 });
 
-const profileUpdateSchema = object({
-    description: string().min(1).max(2000),
-    school: string().min(1).max(200),
-    work: string().min(1).max(200),
-    igId: string().min(1).max(100),
-    snapId: string().min(1).max(100),
-    location: string().min(1).max(100),
-    interests: string().min(1).max(1000),
-    pic1: string().min(1).max(1000),
-    pic2: string().min(1).max(1000),
-    pic3: string().min(1).max(1000),
-    pic4: string().min(1).max(1000),
-    pic5: string().min(1).max(1000)
+const profileIdParamSchema = Joi.object({
+    id: Joi.number().required()
 });
 
-export { uploadImageSchema, profileUpdateSchema };
+const userHeaderSchema = Joi.object({
+    id: Joi.number().required(),
+    email: Joi.string().required()
+});
+
+const profileUpdateSchema = Joi.object({
+    description: Joi.string().max(5000),
+    school: Joi.string().max(500),
+    work: Joi.string().max(500),
+    igId: Joi.string().max(200),
+    snapId: Joi.string().max(200),
+    location: Joi.string().max(200),
+    interests: Joi.string().max(5000),
+    image1: Joi.string().max(5000),
+    image2: Joi.string().max(5000),
+    image3: Joi.string().max(5000),
+    image4: Joi.string().max(5000),
+    image5: Joi.string().max(5000)
+});
+
+export { uploadImageSchema, profileUpdateSchema, profileIdParamSchema, userHeaderSchema };

@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 // Generic
 interface IGeneric {
     [key: string]: any
@@ -7,7 +9,11 @@ interface IGenericResponse {
     message: string
 }
 
-// Node reqeust object  
+// Node request object  
+interface ICustomerRequest extends Request {
+    user?: Record<string, any>
+}
+
 interface IRequestObject extends IGeneric {
     body: IGeneric,
     query: IGeneric,
@@ -42,6 +48,12 @@ interface IStorageObject {
     type: string
 }
 
+interface ICreateImageUploadUrlBody {
+    size: number,
+    filename: string,
+    mimetype: string
+}
+
 interface IImageUploadResponse extends IGenericResponse {
     data: [{
         preSignedUrl: string
@@ -57,11 +69,11 @@ interface IProfileUpdateObject {
     igId?: string,
     snapId?: string,
     interests?: string,
-    pic1?: string,
-    pic2?: string,
-    pic3?: string,
-    pic4?: string,
-    pic5?: string
+    image1?: string,
+    image2?: string,
+    image3?: string,
+    image4?: string,
+    image5?: string,
 }
 
 interface IProfileObject extends IProfileUpdateObject, IBaseModel {
@@ -69,7 +81,50 @@ interface IProfileObject extends IProfileUpdateObject, IBaseModel {
     name: string
 }
 
+interface ICheckProfileResponse {
+    userId: number,
+    id: number
+}
+
+interface ICreateProfileObject {
+    userId: number,
+    description?: string,
+    name: string,
+    location?: string,
+    school?: string,
+    work?: string,
+    igId?: string,
+    snapId?: string,
+    image1?: string,
+    image2?: string,
+    image3?: string,
+    image4?: string,
+    image5?: string,
+    age: number,
+    interests?: string
+}
+
+interface IAddProfileResponse {
+    profileId: number
+}
+
+interface IGetProfileResponse extends IProfileObject {
+    id: number
+}
+
+interface ICacheProfileValue extends IGetProfileResponse {}
+
+// Images
+interface IAddImageMetadata {
+    profileId: number,
+    link: string,
+    filename: string,
+    mimetype: string,
+    size: number;
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
-    IProfileObject
+    IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
+    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest
 };

@@ -1,20 +1,18 @@
-import { interfaces, constants, enums } from '../utils';
-import { CustomError, getProfileByUserId } from '../services';
+import { interfaces, constants, enums, validationSchema, helpers } from '../utils';
+import { CustomError, getProfile, getProfileCache, setKey } from '../services';
 
-const getUserProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
-    const userId: number = req._user?.id;
-    const paramsUserId = Number(req.params.userId);
-    if (isNaN(paramsUserId) || userId !== paramsUserId) {
-        throw new CustomError(enums.StatusCodes.UNAUTHORIZED, enums.Errors.UNAUTHORIZED_REQUEST);
+const getUserProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGetProfileResponse> => {
+    const userId = Number(req.user.id);
+    await validationSchema.profileIdParamSchema.validateAsync(req.params);
+    const profileId = Number(req.params['id']);
+    let profile = await getProfileCache(helpers.buildProfileCacheKey(profileId, userId));
+    if (!profile) {
+        profile = await getProfile(profileId, userId);
     }
-    //Convert this to cache
-    const res = await getProfileByUserId(userId);
-    if (!res) {
-        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);
+    if (!profile) {
+        throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.PROFILE_NOT_FOUND);
     }
-    return {
-        message: constants.PROFILE_UPDATED
-    }
+    return profile;
 }
 
 export default getUserProfile;
