@@ -13,7 +13,7 @@ export const handleAddProfileMessage = async (message: any, channel: string) => 
             if (!res) {
                 throw new Error();
             }
-            const key = `${res.profileId}:${userId}`;
+            const key = `profile:${res.profileId}`;
             setKey(key, JSON.stringify({ id: res.profileId, userId, name, age })).then().catch();
         }
     } catch(err) {
