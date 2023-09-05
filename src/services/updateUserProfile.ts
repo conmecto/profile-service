@@ -14,6 +14,8 @@ const updateUserProfile = async (profileId: number, userId: number, profileObj: 
             actualKey = 'snap_id';
         } else if (key === 'igId') {
             actualKey = 'ig_id';
+        } else if (key === 'userName') {
+            actualKey = 'user_name';
         }
         keysSet.push(` ${actualKey}=$${++count}`);
         params.push(profileObj[key]);

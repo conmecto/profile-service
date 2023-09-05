@@ -8,8 +8,9 @@ import addProfile from './addProfile';
 import getProfile from './getProfile';
 import { handleAddProfileMessage } from './handleMessage';
 import { getKey, getProfileCache, setKey } from './cache';
+import checkUserName from './checkUserName';
 
 export { 
     CustomError, searchCity, addUrl, getPreSignedImageUploadUrl, updateUserProfile, checkProfileByUserAndProfileId, 
-    addProfile, handleAddProfileMessage, getProfile, getKey, getProfileCache, setKey
+    addProfile, handleAddProfileMessage, getProfile, getKey, getProfileCache, setKey, checkUserName
 }

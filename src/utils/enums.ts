@@ -5,6 +5,7 @@ export enum StatusCodes {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
     NOT_FOUND = 404,
+    CONFLICT = 409,
 
     INTERNAL_SERVER = 500
 }
@@ -14,6 +15,7 @@ export enum Errors {
     PROFILE_NOT_FOUND = 'Profile not found',
 
     UNAUTHORIZED_REQUEST = 'Unauthorized request',
+    CONLFIC_USER_NAME = 'User name already exists',
 
     INTERNAL_SERVER = 'Internal server error',
 }
@@ -39,6 +41,7 @@ export enum PrefixesForLogs {
     DB_INSERT_IMAGE_METADATA_ERROR = 'DB insert image metadata error: ',
     DB_UPDATE_PROFILE_ERROR = 'DB update profile error: ',
     DB_SEARCH_CITIES_ERROR = 'DB search cities error: ',
+    DB_SEARCH_USER_NAME_ERROR = 'DB serach user name error: ',
 
     EMAIL_SEND_ERROR = 'Email send error: '
 }
@@ -50,4 +53,32 @@ export enum ImageMimetypes {
     IMAGE_GIF = 'image/gif',
     IMAGE_JPG = 'image/jpg',
     IMAGE_JPEG = 'image/jpeg'
+}
+
+export enum ErrorCodes {
+    UNAUTHORIZED = 'UNAUTHORIZED',
+    FORBIDDEN = 'FORBIDDEN',
+
+    VALIDATION_ERROR = 'VALIDATION_ERROR',
+
+    TOKEN_NOT_SUPPLIED = 'TOKEN_NOT_SUPPLIED',
+    TOKEN_INVALID = 'TOKEN_INVALID',
+    TOKEN_EXPIRED = 'TOKEN_EXPIRED',
+    INVALID_TOKEN_PARAMS = 'INVALID_TOKEN_PARAMS',
+
+    CONLFIC_USER_NAME = 'CONLFIC_USER_NAME',
+
+    INVALID_VERIFICATION_CODE = 'INVALID_VERIFICATION_CODE',
+    VERIFICATION_CODE_EXPIRED = 'VERIFICATION_CODE_EXPIRED',
+    VERIFICATION_CODE_ISSUED_RECENTLY = 'VERIFICATION_CODE_ISSUED_RECENTLY',
+    VERIFICATION_CODE_GENERATE_LIMIT = 'VERIFICATION_CODE_GENERATE_LIMIT',
+    VERIFICATION_CODE_ATTEMPTS_LIMIT = 'VERIFICATION_CODE_ATTEMPTS_LIMIT',
+
+    CITY_NOT_FOUND = 'CITY_NOT_FOUND',
+    USER_NOT_FOUND = 'USER_NOT_FOUND',
+    PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND',
+
+    DUPLICATE_USER = 'DUPLICATE_USER',
+
+    INTERNAL_SERVER = 'INTERNAL_SERVER',
 }

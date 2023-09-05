@@ -9,8 +9,8 @@ const getAge = (date: string): number => {
     return age;
 }
 
-const buildProfileCacheKey = (id: number, userId: number): string => {
-    return `${id}:${userId}`;
+const generateUserName = (name: string) => {
+    return name + '_' + (Math.floor(Math.random()*9000000) + 1000000);
 }
 
-export { getAge, buildProfileCacheKey }
+export { getAge, generateUserName }

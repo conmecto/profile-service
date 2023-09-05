@@ -24,8 +24,9 @@ const getProfile = async (id: number, userId: number): Promise<interfaces.IGetPr
         ...profile,
         snapId: profile.snap_id,
         igId: profile.ig_id,
-        userId: profile.user_id
-      }, ['user_id', 'snap_id', 'ig_id']);
+        userId: profile.user_id,
+        userName: profile.user_name
+      }, ['user_id', 'snap_id', 'ig_id', 'user_name']);
     }
     return null;
 }

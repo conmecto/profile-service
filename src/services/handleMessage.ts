@@ -8,13 +8,14 @@ export const handleAddProfileMessage = async (message: any, channel: string) => 
         const { dob, name, id: userId } = JSON.parse(message);
         if (Environments.redis.channels.userCreatedProfile === channel && dob && name && userId) {
             const age = helpers.getAge(dob);
-            const insertDoc = { age, name, userId };
+            const userName = helpers.generateUserName(name);
+            const insertDoc = { age, name, userId, userName };
             const res = await addProfile(insertDoc);
             if (!res) {
                 throw new Error();
             }
-            const key = `profile:${res.profileId}`;
-            setKey(key, JSON.stringify({ id: res.profileId, userId, name, age })).then().catch();
+            const key = `profile:user:${userId}`;
+            await setKey(key, JSON.stringify({ id: res.profileId, userId, name, age, userName }));
         }
     } catch(err) {
         console.log(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err);

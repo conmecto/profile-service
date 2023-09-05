@@ -62,6 +62,7 @@ interface IImageUploadResponse extends IGenericResponse {
 
 //Profile 
 interface IProfileUpdateObject {
+    userName?: string,
     description?: string,
     location?: string,
     school?: string,
@@ -89,6 +90,7 @@ interface ICheckProfileResponse {
 interface ICreateProfileObject {
     userId: number,
     description?: string,
+    userName: string,
     name: string,
     location?: string,
     school?: string,

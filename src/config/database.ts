@@ -25,7 +25,7 @@ const getDbClient = async (): Promise<PoolClient> => {
     const client = await pool.connect();
     if (!client) {
         // maybe add retry functionality 
-        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
     return client;
 }

@@ -18,6 +18,7 @@ const userHeaderSchema = Joi.object({
 });
 
 const profileUpdateSchema = Joi.object({
+    userName: Joi.string().max(200),
     description: Joi.string().max(5000),
     school: Joi.string().max(500),
     work: Joi.string().max(500),
