@@ -1,11 +1,10 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces } from '../utils'; 
 import { updateProfile, generateImageUploadUrl, getUserProfile } from '../controllers';
-import { parseUserMiddleware } from '../middlewares';
 
 const profileRouter = Router();
 
-profileRouter.post('/:id/image-upload-url', parseUserMiddleware, async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+profileRouter.post('/:id/image-upload-url', async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await generateImageUploadUrl(filteredRequest);
@@ -15,7 +14,7 @@ profileRouter.post('/:id/image-upload-url', parseUserMiddleware, async (req: int
     }
 });
 
-profileRouter.patch('/:id', parseUserMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateProfile(filteredRequest);
@@ -25,7 +24,7 @@ profileRouter.patch('/:id', parseUserMiddleware, async (req: Request, res: Respo
     }
 });
 
-profileRouter.get('/:id', parseUserMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('/users/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserProfile(filteredRequest);

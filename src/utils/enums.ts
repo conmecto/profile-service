@@ -42,8 +42,11 @@ export enum PrefixesForLogs {
     DB_UPDATE_PROFILE_ERROR = 'DB update profile error: ',
     DB_SEARCH_CITIES_ERROR = 'DB search cities error: ',
     DB_SEARCH_USER_NAME_ERROR = 'DB serach user name error: ',
+    DB_GET_PROFILE_BY_USER_ID_ERROR = 'DB get profile by userid error: ',
+    
+    EMAIL_SEND_ERROR = 'Email send error: ',
 
-    EMAIL_SEND_ERROR = 'Email send error: '
+    MIDDLEWARE_PARSE_USER_ERROR = 'Middleware parse user error: ',
 }
 
 export enum ImageMimetypes {

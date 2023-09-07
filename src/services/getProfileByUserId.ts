@@ -3,9 +3,9 @@ import { omit } from 'lodash';
 import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
-const getProfile = async (id: number, userId: number): Promise<interfaces.IGetProfileResponse | null> => {
-    const query = 'SELECT * FROM profile WHERE id=$1 AND user_id=$2';
-    const params = [id, userId];
+const getProfileByUserId = async (userId: number): Promise<interfaces.IGetProfileResponse | null> => {
+    const query = 'SELECT * FROM profile WHERE user_id=$1';
+    const params = [userId];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
@@ -13,7 +13,7 @@ const getProfile = async (id: number, userId: number): Promise<interfaces.IGetPr
         console.log(params);
         res = await client.query(query, params);
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_GET_PROFILE_BY_PROFILE_ID_ERROR + err);
+        console.error(enums.PrefixesForLogs.DB_GET_PROFILE_BY_USER_ID_ERROR + err);
         throw err;
     } finally {
         client.release();
@@ -25,10 +25,15 @@ const getProfile = async (id: number, userId: number): Promise<interfaces.IGetPr
         snapId: profile.snap_id,
         igId: profile.ig_id,
         userId: profile.user_id,
-        userName: profile.user_name
-      }, ['user_id', 'snap_id', 'ig_id', 'user_name']);
+        userName: profile.user_name,
+        image1: profile.image_1,
+        image2: profile.image_2,
+        image3: profile.image_3,
+        image4: profile.image_4,
+        image5: profile.image_5,
+      }, ['user_id', 'snap_id', 'ig_id', 'user_name', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5']);
     }
     return null;
 }
 
-export default getProfile;
+export default getProfileByUserId;

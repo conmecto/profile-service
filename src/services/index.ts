@@ -5,12 +5,12 @@ import getPreSignedImageUploadUrl from './imageUploadUrl';
 import updateUserProfile from './updateUserProfile';
 import checkProfileByUserAndProfileId from './checkProfileByUserAndProfileId';
 import addProfile from './addProfile';
-import getProfile from './getProfile';
+import getProfileByUserId from './getProfileByUserId';
 import { handleAddProfileMessage } from './handleMessage';
 import { getKey, getProfileCache, setKey } from './cache';
 import checkUserName from './checkUserName';
 
 export { 
     CustomError, searchCity, addUrl, getPreSignedImageUploadUrl, updateUserProfile, checkProfileByUserAndProfileId, 
-    addProfile, handleAddProfileMessage, getProfile, getKey, getProfileCache, setKey, checkUserName
+    addProfile, handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName
 }
