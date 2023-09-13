@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces } from '../utils'; 
-import { updateProfile, generateImageUploadUrl, getUserProfile } from '../controllers';
+import { updateProfile, generateImageUploadUrl, getUserProfile, getMultipleUsersProfile } from '../controllers';
 
 const profileRouter = Router();
 
@@ -18,6 +18,16 @@ profileRouter.patch('/:id', async (req: Request, res: Response, next: NextFuncti
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateProfile(filteredRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
+
+profileRouter.get('/multiple-users', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filteredRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await getMultipleUsersProfile(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);

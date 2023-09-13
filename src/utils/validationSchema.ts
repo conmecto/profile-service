@@ -33,4 +33,8 @@ const profileUpdateSchema = Joi.object({
     image5: Joi.string().max(5000)
 });
 
-export { uploadImageSchema, profileUpdateSchema, profileIdParamSchema, userHeaderSchema };
+const multipleUsersProfile = Joi.object({
+    userIds: Joi.string().required()
+});
+
+export { uploadImageSchema, profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfile };

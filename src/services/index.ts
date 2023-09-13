@@ -9,8 +9,10 @@ import getProfileByUserId from './getProfileByUserId';
 import { handleAddProfileMessage } from './handleMessage';
 import { getKey, getProfileCache, setKey } from './cache';
 import checkUserName from './checkUserName';
+import getMultipleProfileByUserIds from './getMultipleProfileByUserIds';
 
 export { 
     CustomError, searchCity, addUrl, getPreSignedImageUploadUrl, updateUserProfile, checkProfileByUserAndProfileId, 
-    addProfile, handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName
+    addProfile, handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
+    getMultipleProfileByUserIds
 }

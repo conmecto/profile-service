@@ -125,8 +125,16 @@ interface IAddImageMetadata {
     size: number;
 }
 
+interface IGetMultipleProfiles extends IProfileObject {
+    id: number,
+    userName: string,
+    name: string,
+    userId: number,
+    image1?: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
-    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest
+    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles
 };
