@@ -13,8 +13,8 @@ const updateProfile = async (req: interfaces.IRequestObject): Promise<interfaces
     }
     const profileUpdateObj = <interfaces.IProfileUpdateObject>req.body;
     await validationSchema.profileUpdateSchema.validateAsync(profileUpdateObj);    
-    if (profileUpdateObj.location) {
-        const checkCity = await searchCity(profileUpdateObj.location);
+    if (profileUpdateObj.city) {
+        const checkCity = await searchCity(profileUpdateObj.city);
         if (!checkCity) {
             throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.CITY_NOT_FOUND, enums.ErrorCodes.CITY_NOT_FOUND);
         }

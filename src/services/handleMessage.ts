@@ -5,11 +5,11 @@ import { setKey } from './cache';
 
 export const handleAddProfileMessage = async (message: any, channel: string) => {
     try {
-        const { dob, name, id: userId } = JSON.parse(message);
+        const { dob, name, id: userId, city, country } = JSON.parse(message);
         if (Environments.redis.channels.userCreatedProfile === channel && dob && name && userId) {
             const age = helpers.getAge(dob);
             const userName = helpers.generateUserName(name);
-            const insertDoc = { age, name, userId, userName };
+            const insertDoc = { age, name, userId, userName, city, country };
             const res = await addProfile(insertDoc);
             if (!res) {
                 throw new Error();

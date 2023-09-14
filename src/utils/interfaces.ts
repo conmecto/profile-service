@@ -64,7 +64,8 @@ interface IImageUploadResponse extends IGenericResponse {
 interface IProfileUpdateObject {
     userName?: string,
     description?: string,
-    location?: string,
+    city?: string,
+    country?: string,
     school?: string,
     work?: string,
     igId?: string,
@@ -92,7 +93,8 @@ interface ICreateProfileObject {
     description?: string,
     userName: string,
     name: string,
-    location?: string,
+    city?: string,
+    country?: string,
     school?: string,
     work?: string,
     igId?: string,
@@ -125,7 +127,7 @@ interface IAddImageMetadata {
     size: number;
 }
 
-interface IGetMultipleProfiles extends IProfileObject {
+interface IGetMultipleProfiles {
     id: number,
     userName: string,
     name: string,
@@ -133,8 +135,16 @@ interface IGetMultipleProfiles extends IProfileObject {
     image1?: string
 }
 
+interface ISearchProfileFilterObj {
+    q?: string,
+    page: number,
+    perPage: number,
+    city?: string,
+    country: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
-    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles
+    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj
 };
