@@ -1,3 +1,19 @@
+export enum Country {
+    INDIA = 'india'
+}
+
+export enum Gender {
+    MAN = 'man',
+    WOMAN = 'woman',
+    NON_BINARY = 'nonbinary'
+}
+
+export enum Search {
+    MEN = 'men',
+    WOMEN = 'women',
+    EVERYONE = 'everyone'
+}
+
 export enum StatusCodes {
     OK = 200,
     CREATED = 201,
@@ -44,6 +60,7 @@ export enum PrefixesForLogs {
     DB_SEARCH_USER_NAME_ERROR = 'DB serach user name error: ',
     DB_GET_PROFILE_BY_USER_ID_ERROR = 'DB get profile by userid error: ',
     DB_GET_MULTIPLE_PROFILES_BY_USER_IDS_ERROR = 'DB get multiple profiles by userIds error: ',
+    DB_SEARCH_PROFILES_ERROR = 'DB search profiles error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: ',
 
