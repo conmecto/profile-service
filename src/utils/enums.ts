@@ -8,7 +8,7 @@ export enum Gender {
     NON_BINARY = 'nonbinary'
 }
 
-export enum Search {
+export enum SearchFor {
     MEN = 'men',
     WOMEN = 'women',
     EVERYONE = 'everyone'
