@@ -2,9 +2,9 @@ import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 import { enums } from '../utils';
  
-const checkUserName = async (userName: string, profileId: number): Promise<boolean> => {
-    const query = 'SELECT id FROM profile WHERE user_name=$1 AND id!=$2';
-    const params = [userName, profileId];
+const checkUserName = async (userId: number, userName: string): Promise<boolean> => {
+    const query = 'SELECT id FROM profile WHERE user_name=$1 AND user_id<>$2 AND deleted_at is NULL';
+    const params = [userName, userId];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {

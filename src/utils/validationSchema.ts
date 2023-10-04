@@ -1,15 +1,8 @@
 import Joi from 'joi';
-import { IMAGE_MAX_SIZE_BYTES } from './constants';
-import { ImageMimetypes, Country } from './enums';
-
-const uploadImageSchema = Joi.object({
-    size: Joi.number().max(IMAGE_MAX_SIZE_BYTES).required(),
-    mimetype: Joi.string().valid(...Object.values(ImageMimetypes)).required(),
-    filename: Joi.string().required()
-});
+import { Country } from './enums';
 
 const profileIdParamSchema = Joi.object({
-    id: Joi.number().required()
+    userId: Joi.number().required()
 });
 
 const userHeaderSchema = Joi.object({
@@ -18,19 +11,15 @@ const userHeaderSchema = Joi.object({
 });
 
 const profileUpdateSchema = Joi.object({
-    userName: Joi.string().max(200),
-    description: Joi.string().max(5000),
-    school: Joi.string().max(500),
-    work: Joi.string().max(500),
-    igId: Joi.string().max(200),
-    snapId: Joi.string().max(200),
-    city: Joi.string().max(200),
-    interests: Joi.string().max(5000),
-    image1: Joi.string().max(5000),
-    image2: Joi.string().max(5000),
-    image3: Joi.string().max(5000),
-    image4: Joi.string().max(5000),
-    image5: Joi.string().max(5000)
+    name: Joi.string().max(200).optional(),
+    userName: Joi.string().max(200).optional(),
+    description: Joi.string().max(5000).optional(),
+    school: Joi.string().max(500).optional(),
+    work: Joi.string().max(500).optional(),
+    igId: Joi.string().max(200).optional(),
+    snapId: Joi.string().max(200).optional(),
+    city: Joi.string().max(200).optional(),
+    interests: Joi.string().max(5000).optional()
 });
 
 const multipleUsersProfileSchema = Joi.object({
@@ -46,4 +35,4 @@ const searchProfilesSchema = Joi.object({
     sameCity: Joi.boolean().optional()
 });
 
-export { uploadImageSchema, profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema };
+export { profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema };

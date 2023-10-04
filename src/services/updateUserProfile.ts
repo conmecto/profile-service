@@ -1,12 +1,11 @@
 import { QueryResult } from 'pg';
-import { omit } from 'lodash';
 import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
-const updateUserProfile = async (profileId: number, userId: number, profileObj: interfaces.IProfileUpdateObject): Promise<boolean> => {
+const updateUserProfile = async (userId: number, profileObj: interfaces.IProfileUpdateObject): Promise<boolean> => {
     let query = `UPDATE profile SET`;
-    let count = 2;
-    const params: (string | undefined | number)[] = [profileId, userId];
+    let count = 1;
+    const params: (string | undefined | number)[] = [userId];
     const keysSet: string[] = [];
     for(const key in profileObj) {
         let actualKey = key;
@@ -20,7 +19,7 @@ const updateUserProfile = async (profileId: number, userId: number, profileObj: 
         keysSet.push(` ${actualKey}=$${++count}`);
         params.push(profileObj[key]);
     }
-    query = query + keysSet.join(',') + ` WHERE id=$1 AND user_id=$2`;
+    query = query + keysSet.join(',') + ` WHERE user_id=$1 AND deleted_at IS NULL`;
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {

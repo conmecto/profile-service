@@ -4,7 +4,7 @@ import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
 const getMultipleProfileByUserIds = async (userIds: number[]): Promise<interfaces.IGetMultipleProfiles[]> => {
-    const query = `SELECT id, user_id, user_name, name, image_1 FROM profile WHERE user_id IN (${userIds.join(',')})`;
+    const query = `SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE user_id IN (${userIds.join(',')})`;
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
@@ -21,8 +21,8 @@ const getMultipleProfileByUserIds = async (userIds: number[]): Promise<interface
             ...profile,
             userId: profile.user_id,
             userName: profile.user_name,
-            image1: profile.image_1,
-        }, ['user_id', 'user_name', 'image_1']);
+            profilePicture: profile.profile_picture,
+        }, ['user_id', 'user_name', 'profile_picture']);
     }) : [];
 }
 

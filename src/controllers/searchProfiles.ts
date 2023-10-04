@@ -15,13 +15,13 @@ const searchProfiles = async (req: interfaces.IRequestObject): Promise<interface
       filterObj.q = q;
     }
     if (city) {
-      filterObj.city = city;
+      filterObj.city = city?.toLowerCase();
     } else if (sameCity) {
       const userProfile = await getProfileByUserId(userId); 
       if (!userProfile) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
       }
-      filterObj.city = userProfile.city;
+      filterObj.city = userProfile.city?.toLowerCase();
     }
     if (!filterObj.country) {
       filterObj.country = enums.Country.INDIA;

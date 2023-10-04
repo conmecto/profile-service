@@ -26,12 +26,8 @@ const getProfileByUserId = async (userId: number): Promise<interfaces.IGetProfil
         igId: profile.ig_id,
         userId: profile.user_id,
         userName: profile.user_name,
-        image1: profile.image_1,
-        image2: profile.image_2,
-        image3: profile.image_3,
-        image4: profile.image_4,
-        image5: profile.image_5,
-      }, ['user_id', 'snap_id', 'ig_id', 'user_name', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5']);
+        profilePicture: profile.profile_picture,
+      }, ['user_id', 'snap_id', 'ig_id', 'user_name', 'profile_picture']);
     }
     return null;
 }

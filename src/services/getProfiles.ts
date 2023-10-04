@@ -4,7 +4,7 @@ import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
 const getProfiles = async (filterObj: interfaces.ISearchProfileFilterObj): Promise<interfaces.IGetMultipleProfiles[]> => {
-    const querySplit = ['SELECT id, user_id, user_name, name, image_1 FROM profile WHERE country=$1 '];
+    const querySplit = ['SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE country=$1 '];
     const params = [filterObj.country, (filterObj.page-1) * filterObj.perPage, filterObj.perPage];
     if (filterObj.q) {
       querySplit.push(`AND (user_name ILIKE $4 OR name ILIKE $4) `);
@@ -33,8 +33,8 @@ const getProfiles = async (filterObj: interfaces.ISearchProfileFilterObj): Promi
             ...profile,
             userId: profile.user_id,
             userName: profile.user_name,
-            image1: profile.image_1,
-        }, ['user_id', 'user_name', 'image_1']);
+            profilePicture: profile.profile_picture,
+        }, ['user_id', 'user_name', 'profile_picture']);
     }) : [];
 }
 
