@@ -23,12 +23,11 @@ export default {
         refresh: process.env.PRIVATE_KEY_REFRESH || 'TEMP_PRIVATE_KEY'
     },
     aws: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'TEMP_KEY',
+        accessKeyId: process.env.AWS_ACCESS_KEY || 'TEMP_KEY',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
-        sesApiVersion: process.env.AWS_SES_API_VERSION || 'TEMP_API_VERSION',
-        s3ApiVersion: process.env.AWS_S3_API_VERSION || 'TEMP_API_VERSION',
         s3Region: process.env.AWS_S3_REGION || 'TEMP_REGION',
-        s3Bucket: process.env.AWS_S3_BUCKET || 'TEMP_BUCKET'
+        s3Bucket: process.env.AWS_S3_BUCKET || 'TEMP_BUCKET',
+        s3ACL: process.env.AWS_S3_ACL || 'TEMP_ACL'
     },
     redis: {
         host: process.env.REDIS_HOST || 'REDIS_HOST',

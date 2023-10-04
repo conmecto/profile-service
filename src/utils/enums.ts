@@ -30,6 +30,8 @@ export enum Errors {
     CITY_NOT_FOUND = 'City not found',
     PROFILE_NOT_FOUND = 'Profile not found',
 
+    INVALID_FILE = 'Invalid file',
+
     UNAUTHORIZED_REQUEST = 'Unauthorized request',
     CONLFIC_USER_NAME = 'User name already exists',
 
@@ -65,15 +67,10 @@ export enum PrefixesForLogs {
     EMAIL_SEND_ERROR = 'Email send error: ',
 
     MIDDLEWARE_PARSE_USER_ERROR = 'Middleware parse user error: ',
-}
 
-export enum ImageMimetypes {
-    IMAGE_PNG = 'image/png',
-    IMAGE_HEIF = 'image/heif',
-    IMAGE_HEIC = 'image/heic',
-    IMAGE_GIF = 'image/gif',
-    IMAGE_JPG = 'image/jpg',
-    IMAGE_JPEG = 'image/jpeg'
+    AWS_CHECK_BUCKET_ERROR = 'AWS check bucket error: ',
+    AWS_CREATE_BUCKET_ERROR = 'AWS create bucket error: ',
+    AWS_UPLOAD_OBJECT_ERROR = 'AWS upload object error: '
 }
 
 export enum ErrorCodes {
@@ -94,6 +91,8 @@ export enum ErrorCodes {
     VERIFICATION_CODE_ISSUED_RECENTLY = 'VERIFICATION_CODE_ISSUED_RECENTLY',
     VERIFICATION_CODE_GENERATE_LIMIT = 'VERIFICATION_CODE_GENERATE_LIMIT',
     VERIFICATION_CODE_ATTEMPTS_LIMIT = 'VERIFICATION_CODE_ATTEMPTS_LIMIT',
+
+    INVALID_FILE = 'INVALID_FILE',
 
     CITY_NOT_FOUND = 'CITY_NOT_FOUND',
     USER_NOT_FOUND = 'USER_NOT_FOUND',

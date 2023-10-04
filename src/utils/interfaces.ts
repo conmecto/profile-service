@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import multer from 'multer';
 
 // Generic
 interface IGeneric {
@@ -20,7 +21,8 @@ interface IRequestObject extends IGeneric {
     params: IGeneric,
     method: string,
     path: string,
-    headers: IGeneric
+    headers: IGeneric,
+    file?: IGeneric
 }
 
 //BaseModel
@@ -43,9 +45,8 @@ interface IStorageObject {
     bucket: string, 
     key: string, 
     acl: string, 
-    expiresIn: number, 
-    length: number, 
-    type: string
+    size: number, 
+    mimetype: string
 }
 
 interface ICreateImageUploadUrlBody {
@@ -62,6 +63,7 @@ interface IImageUploadResponse extends IGenericResponse {
 
 //Profile 
 interface IProfileUpdateObject {
+    name?: string,
     userName?: string,
     description?: string,
     city?: string,
@@ -71,11 +73,7 @@ interface IProfileUpdateObject {
     igId?: string,
     snapId?: string,
     interests?: string,
-    image1?: string,
-    image2?: string,
-    image3?: string,
-    image4?: string,
-    image5?: string,
+    profilePicture?: string,
 }
 
 interface IProfileObject extends IProfileUpdateObject, IBaseModel {
@@ -99,11 +97,7 @@ interface ICreateProfileObject {
     work?: string,
     igId?: string,
     snapId?: string,
-    image1?: string,
-    image2?: string,
-    image3?: string,
-    image4?: string,
-    image5?: string,
+    profilePicture?: string,
     age: number,
     interests?: string
 }
@@ -132,7 +126,7 @@ interface IGetMultipleProfiles {
     userName: string,
     name: string,
     userId: number,
-    image1?: string
+    profilePicture?: string
 }
 
 interface ISearchProfileFilterObj {
@@ -143,8 +137,21 @@ interface ISearchProfileFilterObj {
     country: string
 }
 
+interface IFileMetadata {
+    user_id?: number,
+    key: string,
+    etag?: string,
+    bucket: string,
+    location: string,
+    name: string,
+    mimetype: string,
+    size: number, 
+    height?: number,
+    width?: number,
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
-    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj
+    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata
 };

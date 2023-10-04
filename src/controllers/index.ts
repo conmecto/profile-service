@@ -1,7 +1,7 @@
 import updateProfile from './updateProfile';
-import generateImageUploadUrl from './generateImageUploadUrl';
 import getUserProfile from './getUserProfile';
 import getMultipleUsersProfile from './getMultipleUsersProfile';
 import searchProfiles from './searchProfiles';
+import uploadProfilePicture from './uploadProfilePicture';
 
-export { updateProfile, generateImageUploadUrl, getUserProfile, getMultipleUsersProfile, searchProfiles }
+export { updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture }

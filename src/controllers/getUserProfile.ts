@@ -3,7 +3,7 @@ import { CustomError, getProfileByUserId, getProfileCache, setKey } from '../ser
 
 const getUserProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGetProfileResponse> => {
     await validationSchema.profileIdParamSchema.validateAsync(req.params);
-    const userId = Number(req.params['id']);
+    const userId = Number(req.params['userId']);
     // let profile = await getProfileCache(`profile:user:${userId}`);
     // if (!profile) {
     let profile = await getProfileByUserId(userId);

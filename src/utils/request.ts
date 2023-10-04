@@ -8,7 +8,8 @@ const filterRequest = async (req: Request): Promise<IRequestObject> => {
         params: req.params,
         query: req.query,
         method: req.method,
-        headers: req.headers
+        headers: req.headers,
+        file: req.file
     };
     return httpRequest;
 }

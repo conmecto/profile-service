@@ -1,16 +1,21 @@
-const IMAGE_UPLOAD_URL_GENERATED = 'Image upload url generated';
-const IMAGE_MAX_SIZE_BYTES = 52428800; //50mb
-const IMAGE_PRESIGNED_URL_EXPIRED_SECONDS = 300;
-const IMAGE_PRESIGNED_URL_ACL = '';
-const IMAGE_PRESIGNED_URL_FILE_PATH = '/profile/images/';
-
 const PROFILE_UPDATED = 'Profile updated successfully';
 
 const DB_CONNECTION_TIMEOUT_MILLIS = 2000;
 const DB_MAX_CLIENTS = 20;
 const DB_IDLE_TIMEOUT_MILLIS = 30000;
 
+
+const ALLOWED_FILE_TYPES = [
+  'image/avif', 'image/bmp', 'image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp', 'image/heic', 
+  'image/heif', 'image/heic-sequence', 'image/apng', 'video/x-msvideo', 'video/mp4', 'video/mpeg', 'video/quicktime',
+  'video/3gpp', 'video/ogg', 'video/webm', 'video/hevc', 'video/avc'
+]
+
+//100mb
+const MAX_FILE_SIZE_BYTES = 104857600;
+const MAX_FIELD_SIZE_BYTES = 104857600;
+
 export {
-  IMAGE_UPLOAD_URL_GENERATED, PROFILE_UPDATED, DB_CONNECTION_TIMEOUT_MILLIS, DB_IDLE_TIMEOUT_MILLIS, DB_MAX_CLIENTS,
-  IMAGE_MAX_SIZE_BYTES, IMAGE_PRESIGNED_URL_EXPIRED_SECONDS, IMAGE_PRESIGNED_URL_ACL, IMAGE_PRESIGNED_URL_FILE_PATH
+  PROFILE_UPDATED, DB_CONNECTION_TIMEOUT_MILLIS, DB_IDLE_TIMEOUT_MILLIS, DB_MAX_CLIENTS, MAX_FILE_SIZE_BYTES, ALLOWED_FILE_TYPES,
+  MAX_FIELD_SIZE_BYTES
 }
