@@ -1,5 +1,5 @@
 import parseUserMiddleware from './parseUser';
 import errorHandler from './errorHandling';
-import { ProfilePictureStorage, fileFilter } from './fileParser';
+import { FileStorageEngine, fileFilterFactory } from './fileParser';
 
-export { parseUserMiddleware, errorHandler, ProfilePictureStorage, fileFilter };
+export { parseUserMiddleware, errorHandler, FileStorageEngine, fileFilterFactory };

@@ -1,0 +1,16 @@
+import { interfaces, enums, validationSchema } from '../utils';
+import { getUserPostsPaginated } from '../services';
+
+const getUserPosts = async (req: interfaces.IRequestObject) => {
+    await validationSchema.profileIdParamSchema.validateAsync(req.params);
+    await validationSchema.userPostsQuerySchema.validateAsync(req.query);
+    
+    const userId = Number(req.params['userId']);
+    const { page, perPage } = req.query;
+    const sort = 'createdAt';
+    const order = enums.SortOrder.DESC;
+    const posts = await getUserPostsPaginated(userId, { page, perPage, sort, order });
+    return posts;
+}
+
+export default getUserPosts;

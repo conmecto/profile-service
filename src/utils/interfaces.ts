@@ -150,8 +150,27 @@ interface IFileMetadata {
     width?: number,
 }
 
+interface IPaginationOptions {
+    page: number,
+    perPage: number,
+    sort?: string,
+    order?: string 
+}
+
+interface IPostDetail {
+    id: number,
+    userId: number,
+    location: string,
+    type: string,
+    fileMetadataId: number,
+    createdAt: Date,
+    updatedAt: Date,
+    deletedAt?: Date | null
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
-    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata
+    ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata,
+    IPaginationOptions, IPostDetail
 };

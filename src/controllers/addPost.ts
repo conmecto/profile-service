@@ -1,7 +1,7 @@
-import { interfaces, constants, enums } from '../utils';
-import { CustomError, updateUserImage } from '../services';
+import { interfaces, enums } from '../utils';
+import { CustomError, createNewPost } from '../services';
 
-const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
+const addPost = async (req: interfaces.IRequestObject) => {
     if (!req.file) {
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
     }
@@ -10,7 +10,7 @@ const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<int
         // Try better way like Change setup to save to local file then s3 
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
     }
-    
+
     const userId = req.params.userId;
     const fileData = JSON.parse(req.body.metadata);
     const uploadedData = req.file;
@@ -25,11 +25,11 @@ const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<int
         height: fileData.height,
         width: fileData.width,
     }
-    const updateRes = await updateUserImage(userId, metadata);
-    if (!updateRes) {
+    const res = await createNewPost(userId, metadata);
+    if (!res) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    return { message: 'Profile picture updated successfully' };
+    return { message: 'Post added successfully' };
 }
 
-export default uploadProfilePicture;
+export default addPost;

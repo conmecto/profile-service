@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { Country } from './enums';
+import { Country, SortOrder } from './enums';
 
 const profileIdParamSchema = Joi.object({
     userId: Joi.number().required()
@@ -35,4 +35,14 @@ const searchProfilesSchema = Joi.object({
     sameCity: Joi.boolean().optional()
 });
 
-export { profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema };
+const userPostsQuerySchema = Joi.object({
+    page: Joi.number().min(1).required().default(1),
+    perPage: Joi.number().min(10).required().default(10),
+    sort: Joi.string().optional().default('createdAt'),
+    order: Joi.string().optional().default(SortOrder.DESC)
+});
+
+export { 
+    profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
+    userPostsQuerySchema 
+};

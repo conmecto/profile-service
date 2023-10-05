@@ -2,6 +2,11 @@ export enum Country {
     INDIA = 'india'
 }
 
+export enum SortOrder {
+    ASC = 'asc',
+    DESC = 'desc'
+}
+
 export enum Gender {
     MAN = 'man',
     WOMAN = 'woman',
@@ -31,6 +36,7 @@ export enum Errors {
     PROFILE_NOT_FOUND = 'Profile not found',
 
     INVALID_FILE = 'Invalid file',
+    FILE_SIZE_TOO_LARGE = 'File size too large',
 
     UNAUTHORIZED_REQUEST = 'Unauthorized request',
     CONLFIC_USER_NAME = 'User name already exists',
@@ -63,6 +69,9 @@ export enum PrefixesForLogs {
     DB_GET_PROFILE_BY_USER_ID_ERROR = 'DB get profile by userid error: ',
     DB_GET_MULTIPLE_PROFILES_BY_USER_IDS_ERROR = 'DB get multiple profiles by userIds error: ',
     DB_SEARCH_PROFILES_ERROR = 'DB search profiles error: ',
+    DB_UPDATE_PROFILE_PICTURE_ERROR = 'DB update profile picture error: ',
+    DB_CREATE_POST_ERROR = 'DB create post error: ',
+    DB_GET_POSTS_ERROR = 'DB get posts error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: ',
 
@@ -93,6 +102,7 @@ export enum ErrorCodes {
     VERIFICATION_CODE_ATTEMPTS_LIMIT = 'VERIFICATION_CODE_ATTEMPTS_LIMIT',
 
     INVALID_FILE = 'INVALID_FILE',
+    FILE_SIZE_TOO_LARGE = 'FILE_SIZE_TOO_LARGE',
 
     CITY_NOT_FOUND = 'CITY_NOT_FOUND',
     USER_NOT_FOUND = 'USER_NOT_FOUND',

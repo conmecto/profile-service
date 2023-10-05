@@ -1,7 +1,7 @@
 import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
-const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadata): Promise<boolean> => {
+const createNewPost = async (userId: number, metadata: interfaces.IFileMetadata): Promise<boolean> => {
     let query1Start = 'INSERT INTO file_metadata(user_id';
     let query1End = ') VALUES ($1';
     let count = 2;
@@ -13,7 +13,7 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
         count += 1;
     }
     const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
-    const query2 = `UPDATE profile SET profile_picture=$2, profile_picture_metadata_id=$3 WHERE user_id=$1 AND deleted_at IS NULL`;
+    const query2 = `INSRT INTO post(user_id, location, file_metadata_id, type) VALUES ($1, $2, $3, $4)`;
     const params2 = [userId, metadata.location];
 
     const client = await getDbClient();
@@ -26,14 +26,14 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
         if (!insertFileRes?.rows?.length) {
             throw new Error();
         } 
-        params2.push(insertFileRes.rows[0].id);
+        params2.push(insertFileRes.rows[0].id, metadata.mimetype.split('/')[0]);
         console.log(query2);
         console.log(params2);
         await client.query(query2, params2);
         await client.query('COMMIT');
         res = true;
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_UPDATE_PROFILE_PICTURE_ERROR + err);
+        console.error(enums.PrefixesForLogs.DB_CREATE_POST_ERROR + err);
         await client.query('ROLLBACK');
     } finally {
         client.release();
@@ -41,4 +41,4 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
     return res;
 }
 
-export default updateUserImage;
+export default createNewPost;

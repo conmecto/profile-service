@@ -11,9 +11,11 @@ import checkUserName from './checkUserName';
 import getMultipleProfileByUserIds from './getMultipleProfileByUserIds';
 import getProfiles from './getProfiles';
 import updateUserImage from './updateUserImage';
+import createNewPost from './createNewPost';
+import getUserPostsPaginated from './getUserPostsPaginated';
 
 export { 
-    CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, 
-    addProfile, handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
-    getMultipleProfileByUserIds, getProfiles, updateUserImage
+    CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
+    handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
+    getMultipleProfileByUserIds, getProfiles, updateUserImage, createNewPost, getUserPostsPaginated
 }
