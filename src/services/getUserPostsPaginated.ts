@@ -4,9 +4,9 @@ import { interfaces, enums } from '../utils';
 import { getDbClient } from '../config';
 
 const getUserPostsPaginated = async (userId: number, paginationOptions: interfaces.IPaginationOptions): Promise<interfaces.IPostDetail[]> => {
-    const query = 'SELECT * FROM post WHERE user_id=$1 AND deleted_at is NULL ORDER BY $2 $3 OFFSET $4 LIMIT $5';
+    const query = 'SELECT * FROM post WHERE user_id=$1 AND deleted_at is NULL ORDER BY created_at DESC OFFSET $2 LIMIT $3';
     const skip = (paginationOptions.page - 1) * paginationOptions.perPage;
-    const params = [userId, paginationOptions.sort, paginationOptions.order, skip, paginationOptions.perPage];
+    const params = [userId, skip, paginationOptions.perPage];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {

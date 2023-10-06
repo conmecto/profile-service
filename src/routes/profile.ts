@@ -9,7 +9,7 @@ import { FileStorageEngine, fileFilterFactory } from '../middlewares';
 
 const profileRouter = Router();
 
-profileRouter.post('/users/:userId/image', 
+profileRouter.post('/users/:userId/profile-picture', 
     multer({ 
         storage: new FileStorageEngine('profilePicture'), 
         fileFilter: fileFilterFactory('profilePicture'), 
@@ -43,7 +43,7 @@ profileRouter.post('/users/:userId/post',
     }
 );
 
-profileRouter.get('/users/:userId/post', async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+profileRouter.get('/users/:userId/posts', async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserPosts(filteredRequest);

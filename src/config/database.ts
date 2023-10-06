@@ -1,6 +1,12 @@
+import pg from 'pg'
 import { Pool, PoolClient } from 'pg';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
+
+const timestampzOid = 1184;
+pg.types.setTypeParser(timestampzOid, function (value) {
+  return value
+});
 
 const pool = new Pool({
     host: Environments.database.host,
@@ -10,7 +16,7 @@ const pool = new Pool({
     database: Environments.database.database,
     max: constants.DB_MAX_CLIENTS,
     idleTimeoutMillis: constants.DB_IDLE_TIMEOUT_MILLIS,
-    connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
+    connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS
 });
 
 pool.on('error', (err, client) => {

@@ -29,7 +29,7 @@ const addPost = async (req: interfaces.IRequestObject) => {
     if (!res) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    return { message: 'Post added successfully' };
+    return res;
 }
 
 export default addPost;
