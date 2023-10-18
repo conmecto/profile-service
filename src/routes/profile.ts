@@ -3,7 +3,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces, constants } from '../utils'; 
 import { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
-    addPost, getUserPosts
+    addPost, getUserPosts, deletePost
 } from '../controllers';
 import { FileStorageEngine, fileFilterFactory } from '../middlewares';
 
@@ -37,6 +37,18 @@ profileRouter.post('/users/:userId/post',
             const filteredRequest = await requestUtils.filterRequest(req);
             const controllerResponse = await addPost(filteredRequest);
             res.status(enums.StatusCodes.CREATED).send(controllerResponse);
+        } catch(err) {
+            next(err);
+        }
+    }
+);
+
+profileRouter.delete('/users/:userId/post/:postId', 
+    async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await deletePost(filteredRequest);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);
         } catch(err) {
             next(err);
         }

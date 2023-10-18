@@ -42,7 +42,12 @@ const userPostsQuerySchema = Joi.object({
     order: Joi.string().optional().default(SortOrder.DESC)
 });
 
+const deletePostParamSchema = Joi.object({
+    userId: Joi.number().required(),
+    postId: Joi.number().required()
+});
+
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
-    userPostsQuerySchema 
+    userPostsQuerySchema, deletePostParamSchema
 };

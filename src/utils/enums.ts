@@ -34,6 +34,7 @@ export enum StatusCodes {
 export enum Errors {
     CITY_NOT_FOUND = 'City not found',
     PROFILE_NOT_FOUND = 'Profile not found',
+    POST_NOT_FOUND = 'Post not found',
 
     INVALID_FILE = 'Invalid file',
     FILE_SIZE_TOO_LARGE = 'File size too large',
@@ -72,6 +73,7 @@ export enum PrefixesForLogs {
     DB_UPDATE_PROFILE_PICTURE_ERROR = 'DB update profile picture error: ',
     DB_CREATE_POST_ERROR = 'DB create post error: ',
     DB_GET_POSTS_ERROR = 'DB get posts error: ',
+    DB_DELETE_POST_ERROR = 'DB delete post error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: ',
 
@@ -107,6 +109,7 @@ export enum ErrorCodes {
     CITY_NOT_FOUND = 'CITY_NOT_FOUND',
     USER_NOT_FOUND = 'USER_NOT_FOUND',
     PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND',
+    POST_NOT_FOUND = 'POST_NOT_FOUND',
 
     DUPLICATE_USER = 'DUPLICATE_USER',
 
