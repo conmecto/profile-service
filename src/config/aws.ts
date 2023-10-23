@@ -1,7 +1,7 @@
 import { S3Client, PutObjectCommand, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand } from '@aws-sdk/client-s3';
 import { Environments, interfaces, enums } from '../utils';
 
-const runStorageFile = () => {};
+const runAwsFile = () => {};
 
 const s3Client = new S3Client({ 
     credentials: {
@@ -52,5 +52,5 @@ const s3Client = new S3Client({
     }
 })();
 
-export { runStorageFile, s3Client }
+export { runAwsFile, s3Client }
 
