@@ -5,11 +5,12 @@ import {
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
     addPost, getUserPosts, deletePost
 } from '../controllers';
-import { FileStorageEngine, fileFilterFactory } from '../middlewares';
+import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../middlewares';
 
 const profileRouter = Router();
 
-profileRouter.post('/users/:userId/profile-picture', 
+profileRouter.post('/users/:userId/profile-picture',    
+    authenticateRequest,
     multer({ 
         storage: new FileStorageEngine('profilePicture'), 
         fileFilter: fileFilterFactory('profilePicture'), 
@@ -26,7 +27,8 @@ profileRouter.post('/users/:userId/profile-picture',
     }
 );
 
-profileRouter.post('/users/:userId/post', 
+profileRouter.post('/users/:userId/post',
+    authenticateRequest, 
     multer({ 
         storage: new FileStorageEngine('post'), 
         fileFilter: fileFilterFactory('post'), 
@@ -44,6 +46,7 @@ profileRouter.post('/users/:userId/post',
 );
 
 profileRouter.delete('/users/:userId/post/:postId', 
+    authenticateRequest,
     async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
         try {
             const filteredRequest = await requestUtils.filterRequest(req);
@@ -55,17 +58,20 @@ profileRouter.delete('/users/:userId/post/:postId',
     }
 );
 
-profileRouter.get('/users/:userId/posts', async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
-    try {
-        const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await getUserPosts(filteredRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);
-    } catch(err) {
-        next(err);
+profileRouter.get('/users/:userId/posts',
+    authenticateRequest,
+    async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await getUserPosts(filteredRequest);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);
+        } catch(err) {
+            next(err);
+        }
     }
-});
+);
 
-profileRouter.patch('/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.patch('/users/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateProfile(filteredRequest);
@@ -75,7 +81,7 @@ profileRouter.patch('/users/:userId', async (req: Request, res: Response, next: 
     }
 });
 
-profileRouter.get('', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('',authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await searchProfiles(filteredRequest);
@@ -85,7 +91,7 @@ profileRouter.get('', async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
-profileRouter.get('/multiple-users', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('/multiple-users', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getMultipleUsersProfile(filteredRequest);
@@ -95,7 +101,7 @@ profileRouter.get('/multiple-users', async (req: Request, res: Response, next: N
     }
 });
 
-profileRouter.get('/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('/users/:userId', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getUserProfile(filteredRequest);

@@ -25,13 +25,23 @@ export enum StatusCodes {
 
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
     NOT_FOUND = 404,
     CONFLICT = 409,
+    INVALID_TOKEN = 498,
 
     INTERNAL_SERVER = 500
 }
 
 export enum Errors {
+    UNAUTHORIZED = 'Unauthorized',
+    FORBIDDEN = 'Forbidden Resource',
+
+    TOKEN_NOT_SUPPLIED = 'Token not supplied',
+    TOKEN_INVALID = 'Token invalid',
+    TOKEN_EXPIRED = 'Token expired',
+    INVALID_TOKEN_PARAMS = 'Token params invalid',
+
     CITY_NOT_FOUND = 'City not found',
     PROFILE_NOT_FOUND = 'Profile not found',
     POST_NOT_FOUND = 'Post not found',
@@ -47,6 +57,9 @@ export enum Errors {
 
 
 export enum PrefixesForLogs {
+    AUTH_TOKEN_INVALID_ERROR = 'Auth token invalid error: ',
+    AUTH_TOKEN_EXPIRED_ERROR = 'Auth token expired error: ',
+
     REDIS_SET_OBJECT = 'Redis set object error: ',
     REDIS_GET_PROFILE = 'Redis get profile error: ',
     REDIS_GET_OBJECT = 'Redis get object error: ', 

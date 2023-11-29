@@ -168,9 +168,24 @@ interface IPostDetail {
     deletedAt?: Date | null
 }
 
+//Auth Middleware
+
+interface ITokenVerifyResponse {
+    userId: number,
+    extension: string,
+    number: string,
+    jti: string;
+    exp: number;
+    iss?: string;
+    sub?: string;
+    aud?: string | string[];
+    nbf?: number;
+    iat?: number;
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
     ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata,
-    IPaginationOptions, IPostDetail
+    IPaginationOptions, IPostDetail, ITokenVerifyResponse
 };
