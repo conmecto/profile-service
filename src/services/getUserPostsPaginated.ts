@@ -28,7 +28,7 @@ const getUserPostsPaginated = async (userId: number, paginationOptions: interfac
                 createdAt: post.created_at,
                 updatedAt: post.updated_at,
                 deletedAt: post.deleted_at,
-                }, ['user_id', 'file_metadata_id', 'created_at', 'updated_at', 'deleted_at']
+                }, ['user_id', 'file_metadata_id', 'created_at', 'updated_at', 'deleted_at', 'reported_by']
             );
         });
         return <interfaces.IPostDetail[]>posts;

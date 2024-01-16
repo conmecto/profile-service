@@ -87,6 +87,7 @@ export enum PrefixesForLogs {
     DB_CREATE_POST_ERROR = 'DB create post error: ',
     DB_GET_POSTS_ERROR = 'DB get posts error: ',
     DB_DELETE_POST_ERROR = 'DB delete post error: ',
+    DB_REPORT_POST_ERROR = 'DB report post error: ',
     
     EMAIL_SEND_ERROR = 'Email send error: ',
 

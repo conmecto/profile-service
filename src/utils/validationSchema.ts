@@ -47,7 +47,11 @@ const deletePostParamSchema = Joi.object({
     postId: Joi.number().required()
 });
 
+const reportPostParamSchema = Joi.object({
+    postId: Joi.number().required()
+});
+
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
-    userPostsQuerySchema, deletePostParamSchema
+    userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema
 };
