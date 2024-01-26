@@ -10,7 +10,7 @@ const getAge = (date: string): number => {
 }
 
 const generateUserName = (name: string) => {
-    return name + '_' + (Math.floor(Math.random()*9000000) + 1000000);
+    return name.split(' ').join('_') + '_' + (Math.floor(Math.random()*9000000) + 1000000);
 }
 
 export { getAge, generateUserName }

@@ -11,7 +11,10 @@ const updateProfile = async (req: interfaces.IRequestObject): Promise<interfaces
         return res;
     }
     const profileUpdateObj = <interfaces.IProfileUpdateObject>req.body;
-    await validationSchema.profileUpdateSchema.validateAsync(profileUpdateObj);   
+    await validationSchema.profileUpdateSchema.validateAsync(profileUpdateObj);  
+    if (profileUpdateObj.name) {
+        profileUpdateObj.name = profileUpdateObj.name.toLowerCase();
+    } 
     if (profileUpdateObj.userName) {
         const checkDuplicateUserName = await checkUserName(userId, profileUpdateObj.userName);
         if (checkDuplicateUserName) {
