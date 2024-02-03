@@ -9,11 +9,8 @@ const addProfile = async (createProfileObject: interfaces.ICreateProfileObject):
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch (err) {
-        console.error(enums.PrefixesForLogs.DB_INSERT_PROFILE_ERROR + err);
         throw err;
     } finally {
         client.release();

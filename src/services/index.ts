@@ -15,10 +15,11 @@ import createNewPost from './createNewPost';
 import getUserPostsPaginated from './getUserPostsPaginated';
 import deleteUserPost from './deleteUserPost';
 import reportUserPost from './reportUserPost';
+import logger from './logger';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, createNewPost, getUserPostsPaginated,
-    deleteUserPost, reportUserPost
+    deleteUserPost, reportUserPost, logger
 }

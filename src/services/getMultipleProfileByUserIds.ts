@@ -8,10 +8,8 @@ const getMultipleProfileByUserIds = async (userIds: number[]): Promise<interface
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
-        console.log(query);
         res = await client.query(query, []);
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_GET_MULTIPLE_PROFILES_BY_USER_IDS_ERROR + err);
         throw err;
     } finally {
         client.release();

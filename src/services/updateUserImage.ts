@@ -20,20 +20,15 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
     let res = false;
     try {
         await client.query('BEGIN');
-        console.log(query1);
-        console.log(params1);
         const insertFileRes = await client.query(query1, params1);
         if (!insertFileRes?.rows?.length) {
             throw new Error();
         } 
         params2.push(insertFileRes.rows[0].id);
-        console.log(query2);
-        console.log(params2);
         await client.query(query2, params2);
         await client.query('COMMIT');
         res = true;
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_UPDATE_PROFILE_PICTURE_ERROR + err);
         await client.query('ROLLBACK');
     } finally {
         client.release();

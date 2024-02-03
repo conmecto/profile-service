@@ -94,7 +94,7 @@ profileRouter.patch('/users/:userId', authenticateRequest, async (req: Request, 
     }
 });
 
-profileRouter.get('',authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+profileRouter.get('', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await searchProfiles(filteredRequest);

@@ -10,11 +10,8 @@ const reportUserPost = async (postId: number, userId: number): Promise<boolean> 
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_REPORT_POST_ERROR + err);
         throw err;
     } finally {
         client.release();

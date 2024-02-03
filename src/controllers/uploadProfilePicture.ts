@@ -1,4 +1,4 @@
-import { interfaces, constants, enums } from '../utils';
+import { interfaces, enums } from '../utils';
 import { CustomError, updateUserImage } from '../services';
 
 const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {

@@ -2,6 +2,7 @@ import { redisClient1 as pubClient, redisClient2 as subClient } from '../config'
 import { Environments, helpers, enums } from '../utils';
 import addProfile from './addProfile';
 import { setKey } from './cache';
+import logger from './logger';
 
 export const handleAddProfileMessage = async (message: any, channel: string) => {
     try {
@@ -18,7 +19,7 @@ export const handleAddProfileMessage = async (message: any, channel: string) => 
             await setKey(key, JSON.stringify({ id: res.profileId, userId, name, age, userName }));
         }
     } catch(err) {
-        console.log(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err);
+        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err);
         await pubClient.publish(Environments.redis.channels.userCreatedProfileError, message);
     }
 }

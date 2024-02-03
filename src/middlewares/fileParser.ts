@@ -5,7 +5,7 @@ import { ParsedQs } from 'qs';
 import { Upload } from "@aws-sdk/lib-storage";
 import { s3Client } from '../config';
 import { Environments, constants, enums } from '../utils'; 
-import { CustomError } from '../services';
+import { CustomError, logger } from '../services';
 
 const fileFilterFactory = (key: string) => {
     const typeArray = key === 'post' ? constants.ALLOWED_FILE_TYPES : constants.ALLOWED_IMAGE_TYPES;
@@ -39,14 +39,12 @@ class FileStorageEngine implements StorageEngine {
             client: s3Client,
             queueSize: 2,
         });
-        parallelUploads3.on('httpUploadProgress', res => { 
-            console.log(`${this.key} multipart upload res`, res); 
-        });
+        parallelUploads3.on('httpUploadProgress', res => {});
         parallelUploads3.done().then(res => cb(null, res)).catch(error => cb(error, {}));
     }
 
     _removeFile(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, file: Express.Multer.File, callback: (error: Error | null) => void): void {
-        console.log(`${this.key} upload file size limit reached`);
+        logger(`${this.key} upload file size limit reached`);
         // delete partially uploaded file from s3  
         callback(new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.FILE_SIZE_TOO_LARGE, enums.ErrorCodes.FILE_SIZE_TOO_LARGE));
     }

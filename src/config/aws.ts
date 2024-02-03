@@ -1,5 +1,6 @@
-import { S3Client, PutObjectCommand, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand } from '@aws-sdk/client-s3';
-import { Environments, interfaces, enums } from '../utils';
+import { S3Client, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand } from '@aws-sdk/client-s3';
+import { Environments, enums } from '../utils';
+import { logger } from '../services';
 
 const runAwsFile = () => {};
 
@@ -23,7 +24,7 @@ const s3Client = new S3Client({
         const res = await s3Client.send(command);
         checkBucketExists = true; 
     } catch(error) {
-        console.log(enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + error);
+        await logger(enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + error);
     }
 
     try {
@@ -48,7 +49,7 @@ const s3Client = new S3Client({
             s3Client.send(updateBucketCommand)
         ]);
     } catch(error) {
-        console.log(enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error);
+        await logger(enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error);
     }
 })();
 

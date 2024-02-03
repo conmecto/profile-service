@@ -5,16 +5,13 @@ import { enums } from '../utils';
 
 const deleteUserPost = async (postId: number, userId: number): Promise<boolean> => {
     const date = moment().toISOString(true);
-    const query = 'UPDATE post SET deleted_at=$3 WHERE id=$1 AND user_id=$2';
+    const query = 'UPDATE post SET deleted_at=$3 WHERE id=$1 AND user_id=$2 AND deleted_at IS NULL';
     const params = [postId, userId, date];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
-        console.log(query);
-        console.log(params);
         res = await client.query(query, params);
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_DELETE_POST_ERROR + err);
         throw err;
     } finally {
         client.release();

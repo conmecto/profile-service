@@ -37,6 +37,7 @@ export default {
         channels: {
             userCreatedProfile: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE || 'user-created-profile', 
             userCreatedProfileError: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE_ERROR || 'user-created-profile-error', 
+            logging: process.env.REDIS_CHANNEL_LOGGING || 'logging-channel',
         },
         connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
     },

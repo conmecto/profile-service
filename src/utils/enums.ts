@@ -70,6 +70,7 @@ export enum PrefixesForLogs {
     REDIS_PUBLISH_CHANNEL_ERROR = 'Redis publish channel error: ',
     REDIS_SUBSCRIBE_CHANNEL_ERROR = 'Redis subscribe channel error: ',
     REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR = 'Redis channel message receive error: ',
+    REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
     
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',

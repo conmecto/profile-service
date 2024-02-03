@@ -22,19 +22,14 @@ const createNewPost = async (userId: number, metadata: interfaces.IFileMetadata)
     let res: QueryResult | null = null;
     try {
         await client.query('BEGIN');
-        console.log(query1);
-        console.log(params1);
         const insertFileRes = await client.query(query1, params1);
         if (!insertFileRes?.rows?.length) {
             throw new Error();
         } 
         params2.push(insertFileRes.rows[0].id, metadata.mimetype.split('/')[0]);
-        console.log(query2);
-        console.log(params2);
         res = await client.query(query2, params2);
         await client.query('COMMIT');
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_CREATE_POST_ERROR + err);
         await client.query('ROLLBACK');
     } finally {
         client.release();
