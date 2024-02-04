@@ -1,6 +1,5 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { enums } from '../utils';
  
 const searchCity = async (city: string): Promise<boolean> => {
     const query = 'SELECT id FROM city WHERE name=$1';

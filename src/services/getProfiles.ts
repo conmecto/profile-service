@@ -6,13 +6,13 @@ import { enums, interfaces } from '../utils';
 const getProfiles = async (filterObj: interfaces.ISearchProfileFilterObj): Promise<interfaces.IGetMultipleProfiles[]> => {
     const querySplit = ['SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE country=$1 '];
     const params = [filterObj.country, (filterObj.page-1) * filterObj.perPage, filterObj.perPage];
-    if (filterObj.city) {
-      querySplit.push('AND city=$5 ');
-      params.push(filterObj.city);
-    }
     if (filterObj.q) {
       querySplit.push(`AND (user_name ILIKE $4 OR name ILIKE $4) `);
       params.push('%' + filterObj.q + '%');
+    }
+    if (filterObj.city) {
+        querySplit.push('AND city=$5 ');
+        params.push(filterObj.city);
     }
     querySplit.push('OFFSET $2 LIMIT $3');
     const query = querySplit.join('');

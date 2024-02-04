@@ -9,6 +9,6 @@ import deletePost from './deletePost';
 import reportPost from './reportPost';
 
 export { 
-  updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture, addPost, getUserPosts,
-  deletePost, reportPost
+    updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture, addPost, getUserPosts,
+    deletePost, reportPost
 }

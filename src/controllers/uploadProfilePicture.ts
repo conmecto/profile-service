@@ -1,5 +1,5 @@
 import { interfaces, enums } from '../utils';
-import { CustomError, updateUserImage } from '../services';
+import { CustomError, updateUserImage, setKey, getProfileCache } from '../services';
 
 const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
     if (!req.file) {
@@ -29,6 +29,11 @@ const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<int
     if (!updateRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
+    // const profileCacheKey = `profile:user:${userId}`;
+    // const profileCache = await getProfileCache(profileCacheKey);
+    // if (profileCache) {
+    //     await setKey(profileCacheKey, JSON.stringify({ ...profileCache, profilePicture: metadata.location }));
+    // }
     return { message: 'Profile picture updated successfully' };
 }
 

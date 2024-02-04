@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg';
 import { omit } from 'lodash';
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces } from '../utils';
 
 const getMultipleProfileByUserIds = async (userIds: number[]): Promise<interfaces.IGetMultipleProfiles[]> => {
     const query = `SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE user_id IN (${userIds.join(',')})`;
