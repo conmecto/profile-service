@@ -4,11 +4,21 @@ import { getDbClient } from '../config';
 import { interfaces } from '../utils';
 
 const getMultipleProfileByUserIds = async (userIds: number[]): Promise<interfaces.IGetMultipleProfiles[]> => {
-    const query = `SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE user_id IN (${userIds.join(',')})`;
+    const size = userIds.length;
+    let query = 'SELECT id, user_id, user_name, name, profile_picture FROM profile WHERE user_id IN (';
+    for(let i = 1; i <= size; i++) {
+        query += `$${i}`;
+        if (i === size) {
+            query += ')';
+        } else {
+            query += ',';
+        }
+    }
+    const params = userIds;
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
-        res = await client.query(query, []);
+        res = await client.query(query, params);
     } catch(err) {
         throw err;
     } finally {
