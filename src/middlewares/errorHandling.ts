@@ -5,7 +5,7 @@ import { CustomError, logger } from '../services';
 import { enums } from '../utils';
 
 const errorHandler: ErrorRequestHandler = async (err: any, req: Request, res: Response, next: NextFunction) => {
-    await logger('Profile Service: ' + 'Error handler ' + err);
+    await logger('Profile Service: ' + 'Error handler ' + JSON.stringify(err));
     let newError: CustomError;
     if (err instanceof CustomError) {
         newError = err;

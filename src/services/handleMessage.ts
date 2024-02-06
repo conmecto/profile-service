@@ -19,7 +19,7 @@ export const handleAddProfileMessage = async (message: any, channel: string) => 
             // await setKey(key, JSON.stringify({ id: res.profileId, userId, name, age, userName, city }));
         }
     } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err);
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + JSON.stringify(err));
         await pubClient.publish(Environments.redis.channels.userCreatedProfileError, message);
     }
 }
