@@ -1,6 +1,7 @@
 import pg from 'pg'
 import { Pool, PoolClient } from 'pg';
 import { readFileSync } from 'fs';
+import { join } from 'path';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 
@@ -14,17 +15,18 @@ const pool = new Pool({
     idleTimeoutMillis: constants.DB_IDLE_TIMEOUT_MILLIS,
     connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
     ...(Environments.env === 'prod' ? {
+        ssl: {
+            rejectUnauthorized: true,
+            ca: readFileSync(join(__dirname, '..', '..', '/2', '/key.pem'))?.toString()
+        }
+    } : (
+        Environments.env === 'test' ? 
+        {
             ssl: {
-                ca: readFileSync('./key.pem')
+                rejectUnauthorized: false
             }
-        } : (
-            Environments.env === 'test' ? 
-            {
-                ssl: {
-                    rejectUnauthorized: false
-                }
-            } : {}
-        )
+        } : {}
+    )
     )
 });
 
