@@ -24,7 +24,7 @@ const s3Client = new S3Client({
         const res = await s3Client.send(command);
         checkBucketExists = true; 
     } catch(error) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + JSON.stringify(error));
+        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + error?.toString());
     }
 
     try {
@@ -49,7 +49,7 @@ const s3Client = new S3Client({
             s3Client.send(updateBucketCommand)
         ]);
     } catch(error) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + JSON.stringify(error));
+        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error?.toString());
     }
 })();
 
