@@ -44,10 +44,10 @@ const s3Client = new S3Client({
                 BlockPublicAcls: false
             }
         });
-        const [createRes, updateRes] = await Promise.all([
-            s3Client.send(createCommand),
-            s3Client.send(updateBucketCommand)
-        ]);
+        const createRes = await s3Client.send(createCommand);
+        if (createRes?.Location) {
+            await s3Client.send(updateBucketCommand);
+        }
     } catch(error) {
         await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error?.toString());
     }
