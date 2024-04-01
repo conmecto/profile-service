@@ -8,7 +8,7 @@ import { Environments, constants, enums } from '../utils';
 import { CustomError, logger } from '../services';
 
 const fileFilterFactory = (key: string) => {
-    const typeArray = key === 'post' ? constants.ALLOWED_FILE_TYPES : constants.ALLOWED_IMAGE_TYPES;
+    const typeArray = constants.ALLOWED_FILE_TYPES;
     const fileFilter = (req, file, callback) => {
         if (!typeArray.includes(file.mimetype)) {
             callback(null, false);
