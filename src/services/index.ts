@@ -16,10 +16,12 @@ import getUserPostsPaginated from './getUserPostsPaginated';
 import deleteUserPost from './deleteUserPost';
 import reportUserPost from './reportUserPost';
 import logger from './logger';
+import upsertPinnedPost from './upsertPinnedPost';
+import callProcessImage from './callProcessImageService';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, createNewPost, getUserPostsPaginated,
-    deleteUserPost, reportUserPost, logger
+    deleteUserPost, reportUserPost, logger, upsertPinnedPost, callProcessImage
 }

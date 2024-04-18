@@ -3,7 +3,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces, constants } from '../utils'; 
 import { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
-    addPost, getUserPosts, deletePost, reportPost
+    addPost, getUserPosts, deletePost, reportPost, addPinnedPost
 } from '../controllers';
 import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../middlewares';
 
@@ -38,6 +38,24 @@ profileRouter.post('/users/:userId/post',
         try {
             const filteredRequest = await requestUtils.filterRequest(req);
             const controllerResponse = await addPost(filteredRequest);
+            res.status(enums.StatusCodes.CREATED).send(controllerResponse);
+        } catch(err) {
+            next(err);
+        }
+    }
+);
+
+profileRouter.put('/users/:userId/pinned/post',
+    authenticateRequest, 
+    multer({ 
+        storage: new FileStorageEngine('post'), 
+        fileFilter: fileFilterFactory('post'), 
+        limits: { fieldSize: constants.MAX_FILE_FIELD_SIZE_BYTES, fileSize: constants.MAX_FILE_SIZE_BYTES } 
+    }).single('post'), 
+    async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await addPinnedPost(filteredRequest);
             res.status(enums.StatusCodes.CREATED).send(controllerResponse);
         } catch(err) {
             next(err);

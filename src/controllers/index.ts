@@ -7,8 +7,9 @@ import addPost from './addPost';
 import getUserPosts from './getUserPosts';
 import deletePost from './deletePost';
 import reportPost from './reportPost';
+import addPinnedPost from './addPinnedPost';
 
 export { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture, addPost, getUserPosts,
-    deletePost, reportPost
+    deletePost, reportPost, addPinnedPost
 }
