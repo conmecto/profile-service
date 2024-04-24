@@ -56,7 +56,7 @@ profileRouter.put('/users/:userId/pinned/post',
         try {
             const filteredRequest = await requestUtils.filterRequest(req);
             const controllerResponse = await addPinnedPost(filteredRequest);
-            res.status(enums.StatusCodes.CREATED).send(controllerResponse);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);
         } catch(err) {
             next(err);
         }

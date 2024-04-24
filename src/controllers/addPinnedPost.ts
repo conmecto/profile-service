@@ -29,7 +29,7 @@ const addPinnedPost = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
     callProcessImage(userId, metadata.location, metadata.name);
-    return res;
+    return { postId: res };
 }
 
 export default addPinnedPost;

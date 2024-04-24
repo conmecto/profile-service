@@ -2,7 +2,7 @@ import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 import { interfaces } from '../utils';
 
-const upsertPinnedPost = async (userId: number, metadata: interfaces.IFileMetadata): Promise<boolean | undefined> => {
+const upsertPinnedPost = async (userId: number, metadata: interfaces.IFileMetadata) => {
     let query1Start = 'INSERT INTO file_metadata(user_id';
     let query1End = ') VALUES ($1';
     let count = 2;
@@ -40,12 +40,13 @@ const upsertPinnedPost = async (userId: number, metadata: interfaces.IFileMetada
         await client.query('COMMIT');
     } catch(err) {
         await client.query('ROLLBACK');
+        throw err;
     } finally {
         client.release();
     }  
     if (res?.rows?.length) {
         const post = res.rows[0];
-        return true;
+        return <number>post.id;
     }
 }
 
