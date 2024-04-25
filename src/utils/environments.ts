@@ -27,8 +27,8 @@ export default {
         accessKeyId: process.env.AWS_ACCESS_KEY || 'TEMP_KEY',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
         s3Region: process.env.AWS_S3_REGION || 'TEMP_REGION',
-        s3Bucket: process.env.AWS_S3_BUCKET || 'TEMP_BUCKET',
-        s3ACL: process.env.AWS_S3_ACL || 'TEMP_ACL'
+        s3ACL: process.env.AWS_S3_ACL || 'TEMP_ACL',
+        s3BucketPost: process.env.AWS_S3_BUCKET_POST || 'TEMP_BUCKET_POST',
     },
     redis: {
         host: process.env.REDIS_HOST || 'REDIS_HOST',

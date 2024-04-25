@@ -11,15 +11,14 @@ const s3Client = new S3Client({
     },
     region: Environments.aws.s3Region
 });
-
-(async function checkOrCreateBucket() {
+const checkOrCreateBucket = async (bucket: string) => {
     let checkBucketExists = false;
     if (!s3Client) {
         throw new Error('S3 client not found');
     } 
     try {
         const command = new HeadBucketCommand({
-            Bucket: Environments.aws.s3Bucket
+            Bucket: bucket
         });            
         const res = await s3Client.send(command);
         checkBucketExists = true; 
@@ -32,14 +31,14 @@ const s3Client = new S3Client({
             return;
         }
         const createCommand = new CreateBucketCommand({
-            Bucket: Environments.aws.s3Bucket,
+            Bucket: bucket,
             CreateBucketConfiguration: {
                 LocationConstraint: Environments.aws.s3Region
             },
             ObjectOwnership: 'BucketOwnerPreferred',
         });
         const updateBucketCommand = new PutPublicAccessBlockCommand({
-            Bucket: Environments.aws.s3Bucket,
+            Bucket: bucket,
             PublicAccessBlockConfiguration: {
                 BlockPublicAcls: false
             }
@@ -51,7 +50,9 @@ const s3Client = new S3Client({
     } catch(error) {
         await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + error?.toString());
     }
-})();
+};
+
+checkOrCreateBucket(Environments.aws.s3BucketPost);
 
 export { runAwsFile, s3Client }
 

@@ -28,7 +28,7 @@ class FileStorageEngine implements StorageEngine {
     _handleFile(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, file: Express.Multer.File, cb: (error: Error | null, data: Record<string, any>) => void): void {
         const userId = req.params?.userId;
         const params = {
-            Bucket: Environments.aws.s3Bucket,
+            Bucket: Environments.aws.s3BucketPost,
             Key: (this.key === 'post' ? `${userId}/post/` : `${userId}/profile-pictures/`) + file.originalname,
             Body: file.stream,
             ContentType: file.mimetype,
