@@ -96,7 +96,8 @@ export enum PrefixesForLogs {
 
     AWS_CHECK_BUCKET_ERROR = 'AWS check bucket error: ',
     AWS_CREATE_BUCKET_ERROR = 'AWS create bucket error: ',
-    AWS_UPLOAD_OBJECT_ERROR = 'AWS upload object error: '
+    AWS_UPLOAD_OBJECT_ERROR = 'AWS upload object error: ',
+    AWS_GENERATE_UPLOAD_URL_ERROR = 'AWS generate upload url error: ',
 }
 
 export enum ErrorCodes {

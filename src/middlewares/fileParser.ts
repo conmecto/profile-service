@@ -2,6 +2,7 @@ import { StorageEngine} from 'multer';
 import { Request } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
+import { PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { Upload } from "@aws-sdk/lib-storage";
 import { s3Client } from '../config';
 import { Environments, constants, enums } from '../utils'; 
@@ -27,7 +28,7 @@ class FileStorageEngine implements StorageEngine {
 
     _handleFile(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, file: Express.Multer.File, cb: (error: Error | null, data: Record<string, any>) => void): void {
         const userId = req.params?.userId;
-        const params = {
+        const params: PutObjectCommandInput = {
             Bucket: Environments.aws.s3BucketPost,
             Key: (this.key === 'post' ? `${userId}/post/` : `${userId}/profile-pictures/`) + file.originalname,
             Body: file.stream,

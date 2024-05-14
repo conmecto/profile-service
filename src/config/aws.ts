@@ -1,5 +1,6 @@
-import { S3Client, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand } from '@aws-sdk/client-s3';
-import { Environments, enums } from '../utils';
+import { S3Client, CreateBucketCommand, HeadBucketCommand, PutPublicAccessBlockCommand, BucketLocationConstraint, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Environments, enums, constants, interfaces } from '../utils';
 import { logger } from '../services';
 
 const runAwsFile = () => {};
@@ -11,6 +12,7 @@ const s3Client = new S3Client({
     },
     region: Environments.aws.s3Region
 });
+
 const checkOrCreateBucket = async (bucket: string) => {
     let checkBucketExists = false;
     if (!s3Client) {
@@ -33,7 +35,7 @@ const checkOrCreateBucket = async (bucket: string) => {
         const createCommand = new CreateBucketCommand({
             Bucket: bucket,
             CreateBucketConfiguration: {
-                LocationConstraint: Environments.aws.s3Region
+                LocationConstraint: Environments.aws.s3Region as BucketLocationConstraint
             },
             ObjectOwnership: 'BucketOwnerPreferred',
         });
@@ -54,5 +56,22 @@ const checkOrCreateBucket = async (bucket: string) => {
 
 checkOrCreateBucket(Environments.aws.s3BucketPost);
 
-export { runAwsFile, s3Client }
+const generatePresignedUploadUrl = async ({ userId, fileName, contentType }: interfaces.IGenerateUploadUrlBody) => {
+    try {
+        const Bucket = Environments.aws.s3BucketPost;
+        const Key = 'user/' + userId + '/pinned-post/' + fileName;
+        const command = new PutObjectCommand({
+            Bucket,
+            Key,
+            ACL: 'public-read',
+            ContentType: contentType
+        });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: constants.AWS_PRESIGNED_URL_TIMEOUT_SEC });
+        return url;
+    } catch(error) {
+        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_GENERATE_UPLOAD_URL_ERROR + error?.toString());
+    }
+}
+
+export { runAwsFile, s3Client, generatePresignedUploadUrl }
 

@@ -147,6 +147,7 @@ interface IFileMetadata {
     size: number, 
     height?: number,
     width?: number,
+    match?: boolean
 }
 
 interface IPaginationOptions {
@@ -164,7 +165,8 @@ interface IPostDetail {
     fileMetadataId: number,
     createdAt: Date,
     updatedAt: Date,
-    deletedAt?: Date | null
+    deletedAt?: Date | null,
+    pinned: boolean
 }
 
 //Auth Middleware
@@ -182,9 +184,15 @@ interface ITokenVerifyResponse {
     iat?: number;
 }
 
+interface IGenerateUploadUrlBody { 
+    userId: number, 
+    fileName: string, 
+    contentType: string 
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
     ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata,
-    IPaginationOptions, IPostDetail, ITokenVerifyResponse
+    IPaginationOptions, IPostDetail, ITokenVerifyResponse, IGenerateUploadUrlBody
 };

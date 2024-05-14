@@ -8,8 +8,9 @@ import getUserPosts from './getUserPosts';
 import deletePost from './deletePost';
 import reportPost from './reportPost';
 import addPinnedPost from './addPinnedPost';
+import generateSignedUrl from './generateSignedUrl';
 
 export { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture, addPost, getUserPosts,
-    deletePost, reportPost, addPinnedPost
+    deletePost, reportPost, addPinnedPost, generateSignedUrl
 }

@@ -18,10 +18,11 @@ import reportUserPost from './reportUserPost';
 import logger from './logger';
 import upsertPinnedPost from './upsertPinnedPost';
 import callProcessImage from './callProcessImageService';
+import addUploadUrlRequest from './addUploadUrlRequest';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, createNewPost, getUserPostsPaginated,
-    deleteUserPost, reportUserPost, logger, upsertPinnedPost, callProcessImage
+    deleteUserPost, reportUserPost, logger, upsertPinnedPost, callProcessImage, addUploadUrlRequest
 }

@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { Country, SortOrder } from './enums';
+import { ALLOWED_IMAGE_TYPES } from './constants';
 
 const profileIdParamSchema = Joi.object({
     userId: Joi.number().required()
@@ -51,7 +52,25 @@ const reportPostParamSchema = Joi.object({
     postId: Joi.number().required()
 });
 
+const generateUploadUrlSchema =  Joi.object({
+    userId: Joi.number().required(),
+    fileName: Joi.string().required(),
+    contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required()
+});
+
+const addPinnedPostSchema = Joi.object({
+    userId: Joi.number().required(),
+    key: Joi.string().max(500).required(),
+    location: Joi.string().max(500).required(),
+    name: Joi.string().max(500).required(),
+    mimetype: Joi.string().max(500).required(),
+    size: Joi.number().required(),
+    height: Joi.number().required(),
+    width: Joi.number().required(),
+    match: Joi.boolean().required()
+});
+
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
-    userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema
+    userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPinnedPostSchema
 };
