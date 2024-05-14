@@ -3,7 +3,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces, constants } from '../utils'; 
 import { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
-    addPost, getUserPosts, deletePost, reportPost, addPinnedPost
+    addPost, getUserPosts, deletePost, reportPost, addPinnedPost, generateSignedUrl
 } from '../controllers';
 import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../middlewares';
 
@@ -45,13 +45,26 @@ profileRouter.post('/users/:userId/post',
     }
 );
 
-profileRouter.put('/users/:userId/pinned/post',
+// profileRouter.post('/users/:userId/pinned/post',
+//     authenticateRequest, 
+//     multer({ 
+//         storage: new FileStorageEngine('post'), 
+//         fileFilter: fileFilterFactory('post'), 
+//         limits: { fieldSize: constants.MAX_FILE_FIELD_SIZE_BYTES, fileSize: constants.MAX_FILE_SIZE_BYTES } 
+//     }).single('post'), 
+//     async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+//         try {
+//             const filteredRequest = await requestUtils.filterRequest(req);
+//             const controllerResponse = await addPinnedPost(filteredRequest);
+//             res.status(enums.StatusCodes.OK).send(controllerResponse);
+//         } catch(err) {
+//             next(err);
+//         }
+//     }
+// );
+
+profileRouter.post('/users/:userId/pinned/post',
     authenticateRequest, 
-    multer({ 
-        storage: new FileStorageEngine('post'), 
-        fileFilter: fileFilterFactory('post'), 
-        limits: { fieldSize: constants.MAX_FILE_FIELD_SIZE_BYTES, fileSize: constants.MAX_FILE_SIZE_BYTES } 
-    }).single('post'), 
     async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
         try {
             const filteredRequest = await requestUtils.filterRequest(req);
@@ -62,6 +75,16 @@ profileRouter.put('/users/:userId/pinned/post',
         }
     }
 );
+
+profileRouter.post('/users/request/signed-url', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filterRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await generateSignedUrl(filterRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
+    } catch(err) {
+        next(err);
+    }
+});
 
 profileRouter.delete('/users/:userId/post/:postId', 
     authenticateRequest,

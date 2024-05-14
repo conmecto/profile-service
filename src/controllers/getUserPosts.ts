@@ -4,7 +4,6 @@ import { getUserPostsPaginated } from '../services';
 const getUserPosts = async (req: interfaces.IRequestObject) => {
     await validationSchema.profileIdParamSchema.validateAsync(req.params);
     await validationSchema.userPostsQuerySchema.validateAsync(req.query);
-    
     const userId = Number(req.params['userId']);
     const { page, perPage } = req.query;
     const sort = 'createdAt';
