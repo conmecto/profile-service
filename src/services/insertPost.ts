@@ -1,9 +1,8 @@
 import { QueryResult } from 'pg';
-import { omit } from 'lodash';
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces } from '../utils';
 
-const createNewPost = async (userId: number, metadata: interfaces.IFileMetadata): Promise<interfaces.IPostDetail | undefined> => {
+const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, match: boolean) => {
     let query1Start = 'INSERT INTO file_metadata(user_id';
     let query1End = ') VALUES ($1';
     let count = 2;
@@ -15,9 +14,8 @@ const createNewPost = async (userId: number, metadata: interfaces.IFileMetadata)
         count += 1;
     }
     const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
-    const query2 = `INSERT INTO post(user_id, location, file_metadata_id, type) VALUES ($1, $2, $3, $4) RETURNING post.*`;
-    const params2 = [userId, metadata.location];
-
+    const query2 = `INSERT INTO post(user_id, location, match, type, file_metadata_id) VALUES ($1, $2, $3, $4, $5) RETURNING post.id`;
+    const params2 = [userId, metadata.location, match, 'image'];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
@@ -26,26 +24,19 @@ const createNewPost = async (userId: number, metadata: interfaces.IFileMetadata)
         if (!insertFileRes?.rows?.length) {
             throw new Error();
         } 
-        params2.push(insertFileRes.rows[0].id, metadata.mimetype.split('/')[0]);
+        params2.push(insertFileRes.rows[0].id);
         res = await client.query(query2, params2);
         await client.query('COMMIT');
     } catch(err) {
         await client.query('ROLLBACK');
+        throw err;
     } finally {
         client.release();
     }  
     if (res?.rows?.length) {
         const post = res.rows[0];
-        return <interfaces.IPostDetail>omit({
-            ...post,
-            userId: post.user_id,
-            fileMetadataId: post.file_metadata_id,
-            createdAt: post.created_at,
-            updatedAt: post.updated_at,
-            deletedAt: post.deleted_at,
-            }, ['user_id', 'file_metadata_id', 'created_at', 'updated_at', 'deleted_at']
-        );
+        return <number>post.id;
     }
 }
 
-export default createNewPost;
+export default insertPost;

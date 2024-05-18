@@ -9,7 +9,10 @@ const getUserPosts = async (req: interfaces.IRequestObject) => {
     const sort = 'createdAt';
     const order = enums.SortOrder.DESC;
     const posts = await getUserPostsPaginated(userId, { page: Number(page), perPage: Number(perPage), sort, order });
-    return posts;
+    return {
+        posts,
+        hasMore: posts.length ? posts[0].hasMore : false
+    }
 }
 
 export default getUserPosts;

@@ -1,35 +1,29 @@
-import { interfaces, enums } from '../utils';
-import { CustomError, createNewPost } from '../services';
+import { omit } from 'lodash';
+import { interfaces, enums, validationSchema, Environments } from '../utils';
+import { CustomError, insertPost, callProcessImage } from '../services';
 
 const addPost = async (req: interfaces.IRequestObject) => {
-    if (!req.file) {
-        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
+    const userId = Number(req.params.userId);
+    const fileData = req.body as interfaces.IFileMetadata;
+    await validationSchema.addPostSchema.validateAsync({ ...fileData, userId });
+    const user = req.user;
+    if (!user) {
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    if (!req?.body?.metadata) {
-        // delete file from s3
-        // Try better way like Change setup to save to local file then s3 
-        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
+    if (Number(user.userId) !== userId) {
+        throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
-
-    const userId = req.params.userId;
-    const fileData = JSON.parse(req.body.metadata);
-    const uploadedData = req.file;
-    const metadata = {
-        key: uploadedData.Key,
-        etag: uploadedData.ETag,
-        bucket: uploadedData.Bucket,
-        location: uploadedData.Location,
-        name: uploadedData.originalname,
-        mimetype: uploadedData.mimetype,
-        size: fileData.fileSize,
-        height: fileData.height,
-        width: fileData.width,
-    }
-    const res = await createNewPost(userId, metadata);
+    fileData.bucket = Environments.aws.s3BucketPost;
+    const res = await insertPost(userId, omit(fileData, ['match']), fileData.match as boolean);
     if (!res) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    return res;
+    if (fileData.match) {
+        callProcessImage(userId, fileData.location, fileData.name);
+    }
+    return {  
+        message: 'Post added successfully'
+    };
 }
 
 export default addPost;

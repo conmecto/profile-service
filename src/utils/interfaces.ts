@@ -166,7 +166,7 @@ interface IPostDetail {
     createdAt: Date,
     updatedAt: Date,
     deletedAt?: Date | null,
-    pinned: boolean
+    hasMore: boolean
 }
 
 //Auth Middleware
@@ -190,9 +190,15 @@ interface IGenerateUploadUrlBody {
     contentType: string 
 }
 
+interface IGetFeedPayload { 
+    userId: number,
+    page: number,
+    perPage: number
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
     IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
     ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata,
-    IPaginationOptions, IPostDetail, ITokenVerifyResponse, IGenerateUploadUrlBody
+    IPaginationOptions, IPostDetail, ITokenVerifyResponse, IGenerateUploadUrlBody, IGetFeedPayload
 };

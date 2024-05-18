@@ -11,18 +11,19 @@ import checkUserName from './checkUserName';
 import getMultipleProfileByUserIds from './getMultipleProfileByUserIds';
 import getProfiles from './getProfiles';
 import updateUserImage from './updateUserImage';
-import createNewPost from './createNewPost';
 import getUserPostsPaginated from './getUserPostsPaginated';
 import deleteUserPost from './deleteUserPost';
 import reportUserPost from './reportUserPost';
 import logger from './logger';
-import upsertPinnedPost from './upsertPinnedPost';
+import insertPost from './insertPost';
 import callProcessImage from './callProcessImageService';
 import addUploadUrlRequest from './addUploadUrlRequest';
+import getFeedByUserId from './getFeedByUserId';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
-    getMultipleProfileByUserIds, getProfiles, updateUserImage, createNewPost, getUserPostsPaginated,
-    deleteUserPost, reportUserPost, logger, upsertPinnedPost, callProcessImage, addUploadUrlRequest
+    getMultipleProfileByUserIds, getProfiles, updateUserImage, getUserPostsPaginated,
+    deleteUserPost, reportUserPost, logger, insertPost, callProcessImage, addUploadUrlRequest,
+    getFeedByUserId
 }

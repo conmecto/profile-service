@@ -38,7 +38,7 @@ const searchProfilesSchema = Joi.object({
 
 const userPostsQuerySchema = Joi.object({
     page: Joi.number().min(1).required().default(1),
-    perPage: Joi.number().min(10).required().default(10),
+    perPage: Joi.number().required(),
     sort: Joi.string().optional().default('createdAt'),
     order: Joi.string().optional().default(SortOrder.DESC)
 });
@@ -58,7 +58,7 @@ const generateUploadUrlSchema =  Joi.object({
     contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required()
 });
 
-const addPinnedPostSchema = Joi.object({
+const addPostSchema = Joi.object({
     userId: Joi.number().required(),
     key: Joi.string().max(500).required(),
     location: Joi.string().max(500).required(),
@@ -70,7 +70,14 @@ const addPinnedPostSchema = Joi.object({
     match: Joi.boolean().required()
 });
 
+const getFeedSchema = Joi.object({
+    userId: Joi.number().required(),
+    page: Joi.number().required(),
+    perPage: Joi.number().required()
+});
+
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
-    userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPinnedPostSchema
+    userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPostSchema,
+    getFeedSchema
 };
