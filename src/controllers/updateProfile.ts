@@ -2,8 +2,15 @@ import { interfaces, validationSchema, constants, enums } from '../utils';
 import { CustomError, updateUserProfile, setKey, getProfileCache, checkUserName } from '../services';
 
 const updateProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
-    await validationSchema.profileIdParamSchema.validateAsync(req.params);
     const userId = Number(req.params['userId']);
+    await validationSchema.profileIdParamSchema.validateAsync({ userId });
+    const user = req.user;
+    if (!user) {
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
+    }
+    if (Number(user.userId) !== userId) {
+        throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
+    }
     const res = {
         message: constants.PROFILE_UPDATED
     }
