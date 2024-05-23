@@ -122,10 +122,11 @@ interface IAddImageMetadata {
 
 interface IGetMultipleProfiles {
     id: number,
-    userName: string,
     name: string,
     userId: number,
-    profilePicture?: string
+    profilePicture?: string,
+    age: number,
+    city: string
 }
 
 interface ISearchProfileFilterObj {
