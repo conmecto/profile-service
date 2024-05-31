@@ -2,7 +2,7 @@ import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 import { interfaces } from '../utils';
 
-const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, match: boolean) => {
+const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, match: boolean, caption: string) => {
     let query1Start = 'INSERT INTO file_metadata(user_id';
     let query1End = ') VALUES ($1';
     let count = 2;
@@ -14,8 +14,13 @@ const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, ma
         count += 1;
     }
     const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
-    const query2 = `INSERT INTO post(user_id, location, match, type, file_metadata_id) VALUES ($1, $2, $3, $4, $5) RETURNING post.id`;
-    const params2 = [userId, metadata.location, match, 'image'];
+    const query2 = `
+        INSERT INTO 
+        post(user_id, location, match, type, caption, file_metadata_id) 
+        VALUES ($1, $2, $3, $4, $5, $6) 
+        RETURNING post.id
+    `;
+    const params2 = [userId, metadata.location, match, 'image', caption];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {

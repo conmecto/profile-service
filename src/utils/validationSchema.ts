@@ -67,7 +67,8 @@ const addPostSchema = Joi.object({
     size: Joi.number().required(),
     height: Joi.number().required(),
     width: Joi.number().required(),
-    match: Joi.boolean().required()
+    match: Joi.boolean().required(),
+    caption: Joi.string().required()
 });
 
 const getFeedSchema = Joi.object({
