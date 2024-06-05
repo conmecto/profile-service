@@ -3,7 +3,7 @@ import moment from 'moment';
 import { getDbClient } from '../config';
 import { enums } from '../utils';
 
-const reportUserPost = async (postId: number, userId: number): Promise<boolean> => {
+const reportUserPost = async (postId: number, userId: number) => {
     const date = moment().toISOString(true);
     const query = 'UPDATE post SET reported=true, reported_by=$2, reported_at=$3 WHERE id=$1';
     const params = [postId, userId, date];

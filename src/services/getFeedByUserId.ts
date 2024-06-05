@@ -1,11 +1,21 @@
 import { QueryResult } from 'pg';
 import { omit } from 'lodash';
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces } from '../utils';
 
 const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
     const { userId, page, perPage } = data;
-    const query = 'SELECT * FROM post WHERE user_id=$1 AND reported=false AND deleted_at IS NULL ORDER BY created_at DESC OFFSET $2 LIMIT $3';
+    const query = `
+        SELECT 
+        p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at,
+        pr.profile_picture, pr.name 
+        FROM post p 
+        LEFT JOIN profile pr ON pr.user_id=p.user_id
+        WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+        ORDER BY p.created_at DESC 
+        OFFSET $2 
+        LIMIT $3
+    `;
     const params = [userId, (page - 1) * perPage, perPage];
     const client = await getDbClient();
     let res: QueryResult | null = null;
@@ -21,11 +31,9 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
             return omit({
                 ...post,
                 userId: post.user_id,
-                fileMetadataId: post.file_metadata_id,
                 createdAt: post.created_at,
-                updatedAt: post.updated_at,
-                deletedAt: post.deleted_at,
-                }, ['user_id', 'file_metadata_id', 'created_at', 'updated_at', 'deleted_at', 'reported_by', 'reported_at', 'reported']
+                profilePicture: post.profile_picture,
+                }, ['user_id', 'created_at', 'profile_picture']
             );
         });
         return <interfaces.IPostDetail[]>posts;

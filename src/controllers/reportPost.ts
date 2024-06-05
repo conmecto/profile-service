@@ -12,7 +12,9 @@ const reportPost = async (req: interfaces.IRequestObject) => {
     if (!res) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.POST_NOT_FOUND, enums.ErrorCodes.POST_NOT_FOUND);
     }
-    return res;
+    return {
+        message: 'Reported post successfully'
+    };
 }
 
 export default reportPost;
