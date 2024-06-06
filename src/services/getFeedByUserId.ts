@@ -6,17 +6,27 @@ import { interfaces } from '../utils';
 const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
     const { userId, page, perPage } = data;
     const query = `
-        SELECT 
-        p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at,
-        pr.profile_picture, pr.name 
-        FROM post p 
-        LEFT JOIN profile pr ON pr.user_id=p.user_id
-        WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
-        ORDER BY p.created_at DESC 
-        OFFSET $2 
-        LIMIT $3
+        WITH total_count AS (
+            SELECT count(id) AS count
+            FROM post p
+            WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+        ),
+        paginated_results AS (
+            SELECT 
+            p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at,
+            pr.profile_picture, pr.name, (SELECT count > $4 FROM total_count) AS has_more 
+            FROM post p 
+            LEFT JOIN profile pr ON pr.user_id=p.user_id
+            WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+            ORDER BY p.created_at DESC 
+            OFFSET $2 
+            LIMIT $3
+        )
+        SELECT * FROM paginated_results
     `;
-    const params = [userId, (page - 1) * perPage, perPage];
+    const skip = (page - 1) * perPage;
+    const countSkip = page * perPage;
+    const params = [userId, skip, perPage, countSkip];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
@@ -33,7 +43,8 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
                 userId: post.user_id,
                 createdAt: post.created_at,
                 profilePicture: post.profile_picture,
-                }, ['user_id', 'created_at', 'profile_picture']
+                hasMore: post.has_more
+                }, ['user_id', 'created_at', 'profile_picture', 'has_more']
             );
         });
         return <interfaces.IPostDetail[]>posts;

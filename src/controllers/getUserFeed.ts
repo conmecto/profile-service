@@ -15,7 +15,8 @@ const getUserFeed = async (req: interfaces.IRequestObject) => {
     }
     const feed = await getFeedByUserId({ userId, page, perPage });
     return { 
-        feed
+        feed,
+        hasMore: feed?.length ? feed[0].hasMore : false
     }
 }
 

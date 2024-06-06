@@ -6,7 +6,7 @@ import { getDbClient } from '../config';
 const getUserPostsPaginated = async (userId: number, paginationOptions: interfaces.IPaginationOptions): Promise<interfaces.IPostDetail[]> => {
     const query = `
         WITH total_count AS (
-            SELECT count(*) AS count 
+            SELECT count(id) AS count 
             FROM post 
             WHERE user_id=$1 AND deleted_at is NULL
         ),
