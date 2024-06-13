@@ -9,15 +9,16 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
         WITH total_count AS (
             SELECT count(id) AS count
             FROM post p
-            WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+            WHERE p.user_id<>$1 AND (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
         ),
         paginated_results AS (
             SELECT 
-            p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at,
-            pr.profile_picture, pr.name, (SELECT count > $4 FROM total_count) AS has_more 
+            p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at, p.react_count,
+            pr.profile_picture, pr.name, (SELECT count > $4 FROM total_count) AS has_more, pv.reacted AS reacted 
             FROM post p 
             LEFT JOIN profile pr ON pr.user_id=p.user_id
-            WHERE (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+            LEFT JOIN post_view pv ON pv.user_id=$1 AND pv.post_id=p.id 
+            WHERE p.user_id<>$1 AND (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
             ORDER BY p.created_at DESC 
             OFFSET $2 
             LIMIT $3
@@ -43,8 +44,9 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
                 userId: post.user_id,
                 createdAt: post.created_at,
                 profilePicture: post.profile_picture,
-                hasMore: post.has_more
-                }, ['user_id', 'created_at', 'profile_picture', 'has_more']
+                hasMore: post.has_more,
+                reactCount: post.react_count
+                }, ['user_id', 'created_at', 'profile_picture', 'has_more', 'react_count']
             );
         });
         return <interfaces.IPostDetail[]>posts;

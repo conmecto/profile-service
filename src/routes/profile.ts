@@ -3,7 +3,8 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces, constants } from '../utils'; 
 import { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
-    addPost, getUserPosts, deletePost, reportPost, generateSignedUrl, getUserFeed
+    addPost, getUserPosts, deletePost, reportPost, generateSignedUrl, getUserFeed, markPostsViewed,
+    updatePostReaction
 } from '../controllers';
 import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../middlewares';
 
@@ -105,6 +106,19 @@ profileRouter.delete('/users/:userId/post/:postId',
         try {
             const filteredRequest = await requestUtils.filterRequest(req);
             const controllerResponse = await deletePost(filteredRequest);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);
+        } catch(err) {
+            next(err);
+        }
+    }
+);
+
+profileRouter.put('/users/post/:postId/react', 
+    authenticateRequest,
+    async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await updatePostReaction(filteredRequest);
             res.status(enums.StatusCodes.OK).send(controllerResponse);
         } catch(err) {
             next(err);

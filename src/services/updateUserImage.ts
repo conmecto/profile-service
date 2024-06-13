@@ -15,7 +15,6 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
     const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
     const query2 = `UPDATE profile SET profile_picture=$2, profile_picture_metadata_id=$3 WHERE user_id=$1 AND deleted_at IS NULL`;
     const params2 = [userId, metadata.location];
-
     const client = await getDbClient();
     let res = false;
     try {
