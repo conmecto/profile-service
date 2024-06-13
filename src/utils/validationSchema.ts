@@ -52,6 +52,15 @@ const reportPostParamSchema = Joi.object({
     postId: Joi.number().required()
 });
 
+const markPostsViewedParamSchema = Joi.object({
+    userId: Joi.number().required(),
+    postIds: Joi.array().items(Joi.number()).min(1).required()
+});
+
+const postReactionParamSchema = Joi.object({
+    postId: Joi.number().required()
+});
+
 const generateUploadUrlSchema =  Joi.object({
     userId: Joi.number().required(),
     fileName: Joi.string().required(),
@@ -80,5 +89,5 @@ const getFeedSchema = Joi.object({
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
     userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPostSchema,
-    getFeedSchema
+    getFeedSchema, markPostsViewedParamSchema, postReactionParamSchema
 };

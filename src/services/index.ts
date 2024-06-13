@@ -19,11 +19,13 @@ import insertPost from './insertPost';
 import callProcessImage from './callProcessImageService';
 import addUploadUrlRequest from './addUploadUrlRequest';
 import getFeedByUserId from './getFeedByUserId';
+import updateViewedPosts from './updateViewedPosts';
+import addPostReaction from './addPostReaction';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, getUserPostsPaginated,
     deleteUserPost, reportUserPost, logger, insertPost, callProcessImage, addUploadUrlRequest,
-    getFeedByUserId
+    getFeedByUserId, updateViewedPosts, addPostReaction
 }
