@@ -59,7 +59,7 @@ checkOrCreateBucket(Environments.aws.s3BucketPost);
 const generatePresignedUploadUrl = async ({ userId, fileName, contentType }: interfaces.IGenerateUploadUrlBody) => {
     try {
         const Bucket = Environments.aws.s3BucketPost;
-        const Key = 'user/' + userId + '/pinned-post/' + fileName;
+        const Key = userId + '/post/' + fileName;
         const command = new PutObjectCommand({
             Bucket,
             Key,

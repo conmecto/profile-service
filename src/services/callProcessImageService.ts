@@ -2,16 +2,17 @@ import axios from 'axios';
 import logger from './logger';
 import { Environments } from '../utils';
 
-const callProcessImage = (userId: number, url: string, fileName: string) => {
+const callProcessImage = (userId: number, url: string, fileName: string, postIdRef: Number) => {
     const key = Environments.proccessImageKey;
     const body = {
         userId, 
         url, 
-        fileName
+        fileName, 
+        postIdRef
     }
     axios.post(key, body)
         .then(res => {})
-        .catch(error => logger(error));    
+        .catch(error => logger(error.toString()));    
 }
 
 export default callProcessImage;
