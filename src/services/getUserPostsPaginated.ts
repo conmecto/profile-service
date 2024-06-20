@@ -11,7 +11,8 @@ const getUserPostsPaginated = async (userId: number, paginationOptions: interfac
             WHERE user_id=$1 AND deleted_at is NULL
         ),
         paginated_results AS (
-            SELECT *, (SELECT count > $3 FROM total_count) AS has_more
+            SELECT id, user_id, location, type, created_at, reported, reported_by, match, caption,
+            react_count, (SELECT count > $3 FROM total_count) AS has_more
             FROM post 
             WHERE user_id=$1 AND deleted_at is NULL 
             ORDER BY created_at DESC 
@@ -37,12 +38,11 @@ const getUserPostsPaginated = async (userId: number, paginationOptions: interfac
             return omit({
                 ...post,
                 userId: post.user_id,
-                fileMetadataId: post.file_metadata_id,
                 createdAt: post.created_at,
-                updatedAt: post.updated_at,
-                deletedAt: post.deleted_at,
+                reportedBy: post.reported_by,
+                reactCount: post.react_count,
                 hasMore: post.has_more
-                }, ['user_id', 'file_metadata_id', 'created_at', 'updated_at', 'deleted_at', 'reported_by', 'has_more', 'reported_at']
+                }, ['user_id', 'react_count', 'created_at', 'reported_by', 'has_more']
             );
         });
         return <interfaces.IPostDetail[]>posts;
