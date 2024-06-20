@@ -1,6 +1,6 @@
 import { ICustomerRequest, IRequestObject } from './interfaces';
 
-const filterRequest = async (req: ICustomerRequest): Promise<IRequestObject> => {
+const filterRequest = async (req: ICustomerRequest) => {
     const httpRequest: IRequestObject = {
         body: req.body,
         path: req.path,
