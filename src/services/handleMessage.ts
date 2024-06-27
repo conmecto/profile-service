@@ -18,8 +18,12 @@ const handleAddProfileMessage = async (message: any, channel: string) => {
             // const key = `profile:user:${userId}`;
             // await setKey(key, JSON.stringify({ id: res.profileId, userId, name, age, userName, city }));
         }
-    } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
         await pubClient.publish(Environments.redis.channels.userCreatedProfileError, message);
     }
 }
@@ -30,8 +34,12 @@ const handleAccountRemovedMessage = async (message: any, channel: string) => {
         if (Environments.redis.channels.userAccountRemoved === channel && userId) {
             await removeProfile(Number(userId));
         }
-    } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_ACCOUNT_REMOVED_MESSAGE_ERROR + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_ACCOUNT_REMOVED_MESSAGE_ERROR + errorString);
     }
 }
 

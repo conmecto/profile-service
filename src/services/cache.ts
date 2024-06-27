@@ -8,8 +8,12 @@ const setKey = async (key: string, value: string): Promise<boolean | null> => {
         if (cacheClient.isReady) {
             res = await cacheClient.set(key.toLocaleLowerCase(), value);
         } 
-    } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + <string>err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + <string>errorString);
     }
     return Boolean(res);
 }
@@ -21,8 +25,12 @@ const getProfileCache = async (key: string) => {
             const tempValue = await cacheClient.get(key);
             value = tempValue ? JSON.parse(tempValue) : null;
         }
-    } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_PROFILE + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_PROFILE + errorString);
     }
     return value;
 }
@@ -33,8 +41,12 @@ const getKey = async (key: string): Promise<string | null> => {
         if (cacheClient.isReady) {
             value = await cacheClient.get(key);
         }
-    } catch(err) {
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
     }
     return value;
 }
