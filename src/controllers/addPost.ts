@@ -14,7 +14,12 @@ const addPost = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
     fileData.bucket = Environments.aws.s3BucketPost;
-    const res = await insertPost(userId, omit(fileData, ['match', 'caption']) as interfaces.IFileMetadata, fileData.match as boolean, fileData.caption);
+    const res = await insertPost(
+        userId, 
+        omit(fileData, ['match', 'caption', 'tags']) as interfaces.IFileMetadata, 
+        fileData.match as boolean, fileData.caption,
+        fileData.tags
+    );
     if (!res) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }

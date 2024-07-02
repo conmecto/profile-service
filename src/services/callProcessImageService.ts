@@ -12,7 +12,7 @@ const callProcessImage = (userId: number, url: string, fileName: string, postIdR
     }
     axios.post(key, body)
         .then(res => {})
-        .catch(error => logger(error.toString()));    
+        .catch(error => logger('Profile Service: Process Image ' + error.toString()));    
 }
 
 export default callProcessImage;
