@@ -14,7 +14,7 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
         paginated_results AS (
             SELECT 
             p.id, p.user_id, p.location, p.type, p.match, p.caption, p.created_at, p.react_count,
-            pr.profile_picture, pr.name, (SELECT count > $4 FROM total_count) AS has_more, pv.reacted AS reacted 
+            pr.profile_picture, pr.name, p.tags, (SELECT count > $4 FROM total_count) AS has_more, pv.reacted AS reacted 
             FROM post p 
             LEFT JOIN profile pr ON pr.user_id=p.user_id
             LEFT JOIN post_view pv ON pv.user_id=$1 AND pv.post_id=p.id 

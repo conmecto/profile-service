@@ -12,7 +12,7 @@ const getUserPostsPaginated = async (userId: number, paginationOptions: interfac
         ),
         paginated_results AS (
             SELECT id, user_id, location, type, created_at, reported, reported_by, match, caption,
-            react_count, (SELECT count > $3 FROM total_count) AS has_more
+            react_count, tags, (SELECT count > $3 FROM total_count) AS has_more
             FROM post 
             WHERE user_id=$1 AND deleted_at is NULL 
             ORDER BY created_at DESC 
