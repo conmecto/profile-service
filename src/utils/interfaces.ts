@@ -124,9 +124,7 @@ interface IGetMultipleProfiles {
     id: number,
     name: string,
     userId: number,
-    profilePicture?: string,
-    age: number,
-    city: string
+    profilePicture?: string
 }
 
 interface ISearchProfileFilterObj {
