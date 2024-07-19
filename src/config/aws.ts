@@ -29,7 +29,7 @@ const checkOrCreateBucket = async (bucket: string) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.AWS_CHECK_BUCKET_ERROR + errorString);
     }
 
     try {
@@ -58,7 +58,7 @@ const checkOrCreateBucket = async (bucket: string) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.AWS_CREATE_BUCKET_ERROR + errorString);
     }
 };
 
@@ -81,7 +81,7 @@ const generatePresignedUploadUrl = async ({ userId, fileName, contentType }: int
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.AWS_GENERATE_UPLOAD_URL_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.AWS_GENERATE_UPLOAD_URL_ERROR + errorString);
     }
 }
 

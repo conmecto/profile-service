@@ -23,7 +23,7 @@ const handleAddProfileMessage = async (message: any, channel: string) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR + errorString);
         await pubClient.publish(Environments.redis.channels.userCreatedProfileError, message);
     }
 }
@@ -39,7 +39,7 @@ const handleAccountRemovedMessage = async (message: any, channel: string) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_CHANNEL_ACCOUNT_REMOVED_MESSAGE_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_CHANNEL_ACCOUNT_REMOVED_MESSAGE_ERROR + errorString);
     }
 }
 

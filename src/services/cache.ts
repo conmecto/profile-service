@@ -13,7 +13,7 @@ const setKey = async (key: string, value: string): Promise<boolean | null> => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + <string>errorString);
+        await logger(enums.PrefixesForLogs.REDIS_SET_OBJECT + <string>errorString);
     }
     return Boolean(res);
 }
@@ -30,7 +30,7 @@ const getProfileCache = async (key: string) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_PROFILE + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_GET_PROFILE + errorString);
     }
     return value;
 }
@@ -46,7 +46,7 @@ const getKey = async (key: string): Promise<string | null> => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Profile Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_GET_OBJECT + errorString);
     }
     return value;
 }

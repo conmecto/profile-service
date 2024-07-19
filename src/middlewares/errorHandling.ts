@@ -9,15 +9,15 @@ const errorHandler: ErrorRequestHandler = async (error: any, req: Request, res: 
     if (error instanceof CustomError) {
         newError = error;
         const errorObj = error.loggingErrorObject;
-        await logger('Profile Service: Error handler: ' + JSON.stringify(errorObj));
+        await logger('Error handler: ' + JSON.stringify(errorObj));
     } else if (error instanceof ValidationError) {
-        await logger('Profile Service: Error handler: ' + error.message);
+        await logger('Error handler: ' + error.message);
         newError = new CustomError(enums.StatusCodes.BAD_REQUEST, error.message, enums.ErrorCodes.VALIDATION_ERROR);
     } else if (error instanceof MulterError) {
-        await logger('Profile Service: Error handler: Multer Error' + error.message);
+        await logger('Error handler: Multer Error' + error.message);
         newError = new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
     } else {
-        await logger('Profile Service: Error handler: ' + JSON.stringify({
+        await logger('Error handler: ' + JSON.stringify({
             message: error?.toString(),
             stack: error?.stack 
         }));
