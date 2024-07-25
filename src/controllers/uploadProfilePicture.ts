@@ -10,15 +10,13 @@ const uploadProfilePicture = async (req: interfaces.IRequestObject): Promise<int
         // Try better way like Change setup to save to local file then s3 
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_FILE, enums.ErrorCodes.INVALID_FILE);
     }
-    
     const userId = req.params.userId;
     const fileData = JSON.parse(req.body.metadata);
     const uploadedData = req.file;
     const metadata = {
-        key: uploadedData.Key,
+        key: uploadedData.Location,
         etag: uploadedData.ETag,
         bucket: uploadedData.Bucket,
-        location: uploadedData.Location,
         name: uploadedData.originalname,
         mimetype: uploadedData.mimetype,
         size: fileData.fileSize,

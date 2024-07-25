@@ -69,8 +69,7 @@ const generateUploadUrlSchema =  Joi.object({
 
 const addPostSchema = Joi.object({
     userId: Joi.number().required(),
-    key: Joi.string().max(500).required(),
-    location: Joi.string().max(500).required(),
+    key: Joi.string().max(1000).required(),
     name: Joi.string().max(500).required(),
     mimetype: Joi.string().max(500).required(),
     size: Joi.number().required(),

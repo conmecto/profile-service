@@ -17,7 +17,8 @@ const addPost = async (req: interfaces.IRequestObject) => {
     const res = await insertPost(
         userId, 
         omit(fileData, ['match', 'caption', 'tags']) as interfaces.IFileMetadata, 
-        fileData.match as boolean, fileData.caption,
+        fileData.match as boolean, 
+        fileData.caption,
         fileData.tags
     );
     if (!res) {

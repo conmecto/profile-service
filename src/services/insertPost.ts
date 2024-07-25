@@ -1,35 +1,34 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { interfaces } from '../utils';
+import { interfaces, helpers } from '../utils';
 
 const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, match: boolean, caption: string, tags: string = '') => {
-    let query1Start = 'INSERT INTO file_metadata(user_id';
-    let query1End = ') VALUES ($1';
-    let count = 2;
-    const params1: (string | undefined | number)[] = [userId];
-    for(const key in metadata) {
-        query1Start += `, ${key}`;
-        query1End += `, $${count}`;
-        params1.push(metadata[key]);
-        count += 1;
-    }
-    const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
+    const keys = Object.keys(metadata);
+    const values = keys.map((key, index) => `$${index+2}`).join(',');
+    const query1 = `
+        INSERT INTO 
+        file_metadata
+        (user_id,${keys.join(',')})
+        VALUES ($1,${values})
+        RETURNING file_metadata.id
+    `;
+    const params1 = [userId, ...Object.values(metadata)];
     const query2 = `
         INSERT INTO 
         post(user_id, location, match, type, caption, tags, file_metadata_id) 
         VALUES ($1, $2, $3, $4, $5, $6, $7) 
         RETURNING post.id
     `;
-    const params2 = [userId, metadata.location, match, 'image', caption, tags];
+    const params2 = [userId, metadata.key, match, 'image', caption, tags];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
         await client.query('BEGIN');
-        const insertFileRes = await client.query(query1, params1);
-        if (!insertFileRes?.rows?.length) {
+        const fileMetaRes = await client.query(query1, params1);
+        if (!fileMetaRes?.rows?.length) {
             throw new Error();
         } 
-        params2.push(insertFileRes.rows[0].id);
+        params2.push(fileMetaRes.rows[0].id);
         res = await client.query(query2, params2);
         await client.query('COMMIT');
     } catch(err) {

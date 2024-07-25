@@ -140,7 +140,6 @@ interface IFileMetadata {
     key: string,
     etag?: string,
     bucket: string,
-    location: string,
     name: string,
     mimetype: string,
     size: number, 

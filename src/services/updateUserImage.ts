@@ -1,34 +1,38 @@
 import { getDbClient } from '../config';
 import { enums, interfaces } from '../utils';
 
-const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadata): Promise<boolean> => {
-    let query1Start = 'INSERT INTO file_metadata(user_id';
-    let query1End = ') VALUES ($1';
-    let count = 2;
-    const params1: (string | undefined | number)[] = [userId];
-    for(const key in metadata) {
-        query1Start += `, ${key}`;
-        query1End += `, $${count}`;
-        params1.push(metadata[key]);
-        count += 1;
-    }
-    const query1 = query1Start + query1End + ') RETURNING file_metadata.id';
-    const query2 = `UPDATE profile SET profile_picture=$2, profile_picture_metadata_id=$3 WHERE user_id=$1 AND deleted_at IS NULL`;
-    const params2 = [userId, metadata.location];
+const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadata) => {
+    const keys = Object.keys(metadata);
+    const values = keys.map((key, index) => `$${index+2}`).join(',');
+    const query1 = `
+        INSERT INTO 
+        file_metadata
+        (user_id,${keys.join(',')})
+        VALUES ($1,${values})
+        RETURNING file_metadata.id
+    `;
+    const params1 = [userId, ...Object.values(metadata)];
+    const query2 = `
+        UPDATE profile 
+        SET profile_picture=$2, profile_picture_metadata_id=$3 
+        WHERE user_id=$1 AND deleted_at IS NULL
+    `;
+    const params2 = [userId, metadata.key];
     const client = await getDbClient();
     let res = false;
     try {
         await client.query('BEGIN');
-        const insertFileRes = await client.query(query1, params1);
-        if (!insertFileRes?.rows?.length) {
+        const fileMetaRes = await client.query(query1, params1);
+        if (!fileMetaRes?.rows?.length) {
             throw new Error();
         } 
-        params2.push(insertFileRes.rows[0].id);
+        params2.push(fileMetaRes.rows[0].id);
         await client.query(query2, params2);
         await client.query('COMMIT');
         res = true;
     } catch(err) {
         await client.query('ROLLBACK');
+        throw err;
     } finally {
         client.release();
     }  
