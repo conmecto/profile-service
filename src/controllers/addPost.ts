@@ -25,7 +25,7 @@ const addPost = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
     if (fileData.match) {
-        callProcessImage(userId, fileData.location, fileData.name, res);
+        callProcessImage(userId, fileData.key, fileData.name, res);
     }
     return {  
         message: 'Post added successfully'
