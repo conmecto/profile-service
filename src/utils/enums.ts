@@ -1,5 +1,5 @@
 export enum Country {
-    INDIA = 'india'
+    INDIA = 'in'
 }
 
 export enum SortOrder {
@@ -69,7 +69,6 @@ export enum PrefixesForLogs {
     REDIS_CONNECTION_READY_CLIENT2 = 'Redis client 2 is ready: ',
     REDIS_PUBLISH_CHANNEL_ERROR = 'Redis publish channel error: ',
     REDIS_SUBSCRIBE_CHANNEL_ERROR = 'Redis subscribe channel error: ',
-    REDIS_CHANNEL_MESSAGE_RECEIVE_ERROR = 'Redis channel message receive error: ',
     REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
     REDIS_CHANNEL_ACCOUNT_REMOVED_MESSAGE_ERROR = 'Redis channel account removed message error: ',
     

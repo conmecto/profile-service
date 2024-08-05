@@ -1,8 +1,8 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { interfaces, enums } from '../utils';
+import { interfaces } from '../utils';
 
-const addProfile = async (createProfileObject: interfaces.ICreateProfileObject): Promise<interfaces.IAddProfileResponse | null> => {
+const addProfile = async (createProfileObject: interfaces.ICreateProfileObject) => {
     const query = 'INSERT INTO profile(age, name, user_id, user_name, city, country) VALUES ($1, $2, $3, $4, $5, $6) RETURNING profile.id';
     const { age, name, userId, userName, city, country } = createProfileObject;
     const params = [age, name, userId, userName, city, country];
