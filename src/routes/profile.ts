@@ -10,6 +10,14 @@ import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../mi
 
 const profileRouter = Router();
 
+profileRouter.get('/check', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(enums.StatusCodes.OK).send('Okay');
+    } catch(err) {
+        next(err);
+    }
+});
+
 profileRouter.post('/users/:userId/profile-picture',    
     authenticateRequest,
     multer({ 
