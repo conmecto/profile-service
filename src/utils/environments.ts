@@ -18,7 +18,8 @@ export default {
         port: Number(process.env.DB_PORT) || 5432,
         username: process.env.DB_USERNAME || 'postgres',
         database: process.env.DB_NAME || 'postgres',
-        password: process.env.DB_PASSWORD || 'postgres'
+        password: process.env.DB_PASSWORD || 'postgres',
+        keyName: process.env.DB_KEY_NAME || ''
     },
     token: {
         publicKey: process.env.TOKEN_PUBLIC_KEY || 'TEMP_PUBLIC_KEY'
