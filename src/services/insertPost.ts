@@ -20,16 +20,27 @@ const insertPost = async (userId: number, metadata: interfaces.IFileMetadata, ma
         RETURNING post.id
     `;
     const params2 = [userId, metadata.key, match, 'image', caption, tags];
+    const query3 = `
+        INSERT INTO 
+        post_reaction (user_id, post_id)
+        VALUES ($1, $2)
+    `;
+    const params3 = [userId];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
         await client.query('BEGIN');
         const fileMetaRes = await client.query(query1, params1);
         if (!fileMetaRes?.rows?.length) {
-            throw new Error();
+            throw new Error('Adding Post failed');
         } 
         params2.push(fileMetaRes.rows[0].id);
         res = await client.query(query2, params2);
+        if (!res?.rows?.length) {
+            throw new Error('Adding Post failed');
+        } 
+        params3.push(res.rows[0].id);
+        await client.query(query3, params3);
         await client.query('COMMIT');
     } catch(err) {
         await client.query('ROLLBACK');
