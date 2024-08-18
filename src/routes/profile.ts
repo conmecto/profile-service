@@ -3,8 +3,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces, constants } from '../utils'; 
 import { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture,
-    addPost, getUserPosts, deletePost, reportPost, generateSignedUrl, getUserFeed, markPostsViewed,
-    updatePostReaction
+    addPost, getUserPosts, deletePost, reportPost, generateSignedUrl, getUserFeed, updatePostReaction
 } from '../controllers';
 import { FileStorageEngine, fileFilterFactory, authenticateRequest } from '../middlewares';
 

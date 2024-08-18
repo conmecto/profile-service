@@ -5,7 +5,7 @@ const addPostReaction = async (userId: number, postId: number) => {
     const reactedAt = moment().toISOString(true);
     const params1 = [userId, postId, true, reactedAt];
     const query1 = `
-        INSERT INTO post_view (user_id, post_id, reacted, reacted_at)
+        INSERT INTO post_reaction (user_id, post_id, reacted, reacted_at)
         VALUES ($1, $2, $3, $4)
     `;
     const query2 = `
