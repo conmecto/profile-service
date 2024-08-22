@@ -10,6 +10,10 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
             SELECT count(id) AS count
             FROM post p
             WHERE p.user_id<>$1 AND (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+        ), blocked_user AS (
+            SELECT user_id_2 as blocked FROM profile_block WHERE user_id_1=$1
+            UNION
+            SELECT user_id_1 as blocked FROM profile_block WHERE user_id_2=$1
         ),
         paginated_results AS (
             SELECT 
@@ -18,7 +22,11 @@ const getFeedByUserId = async (data: interfaces.IGetFeedPayload) => {
             FROM post p 
             LEFT JOIN profile pr ON pr.user_id=p.user_id
             LEFT JOIN post_reaction prt ON prt.user_id=$1 AND prt.post_id=p.id 
-            WHERE p.user_id<>$1 AND (p.reported_by<>$1 OR p.reported_by IS NULL) AND p.deleted_at IS NULL 
+            WHERE
+            p.user_id<>$1 AND 
+            p.user_id NOT IN (SELECT blocked FROM blocked_user) AND 
+            (p.reported_by<>$1 OR p.reported_by IS NULL) AND 
+            p.deleted_at IS NULL 
             ORDER BY p.created_at DESC 
             OFFSET $2 
             LIMIT $3
