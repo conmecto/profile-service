@@ -20,11 +20,12 @@ import callProcessImage from './callProcessImageService';
 import addUploadUrlRequest from './addUploadUrlRequest';
 import getFeedByUserId from './getFeedByUserId';
 import addPostReaction from './addPostReaction';
+import blockProfile from './blockProfile';
 
 export { 
     CustomError, searchCity, addUrl, updateUserProfile, checkProfileByUserAndProfileId, addProfile, 
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, getUserPostsPaginated,
     deleteUserPost, reportUserPost, logger, insertPost, callProcessImage, addUploadUrlRequest,
-    getFeedByUserId, addPostReaction, handleAccountRemovedMessage
+    getFeedByUserId, addPostReaction, handleAccountRemovedMessage, blockProfile
 }
