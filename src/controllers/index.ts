@@ -10,8 +10,9 @@ import addPost from './addPost';
 import generateSignedUrl from './generateSignedUrl';
 import getUserFeed from './getUserFeed';
 import updatePostReaction from './updatePostReaction';
+import blockUserProfile from './blockUserProfile';
 
 export { 
     updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, uploadProfilePicture, addPost, getUserPosts,
-    deletePost, reportPost, generateSignedUrl, getUserFeed, updatePostReaction
+    deletePost, reportPost, generateSignedUrl, getUserFeed, updatePostReaction, blockUserProfile
 }

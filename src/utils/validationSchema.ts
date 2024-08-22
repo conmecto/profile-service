@@ -52,6 +52,11 @@ const reportPostParamSchema = Joi.object({
     postId: Joi.number().required()
 });
 
+const blockParamSchema = Joi.object({
+    userId: Joi.number().required(),
+    blockedUserId: Joi.number().required()
+});
+
 const markPostsViewedParamSchema = Joi.object({
     userId: Joi.number().required(),
     postIds: Joi.array().items(Joi.number()).min(1).required()
@@ -89,5 +94,5 @@ const getFeedSchema = Joi.object({
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
     userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPostSchema,
-    getFeedSchema, markPostsViewedParamSchema, postReactionParamSchema
+    getFeedSchema, markPostsViewedParamSchema, postReactionParamSchema, blockParamSchema
 };
