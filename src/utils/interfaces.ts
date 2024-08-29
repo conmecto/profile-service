@@ -94,10 +94,8 @@ interface ICreateProfileObject {
     country?: string,
     school?: string,
     work?: string,
-    igId?: string,
-    snapId?: string,
     profilePicture?: string,
-    age: number,
+    dob?: string,
     interests?: string
 }
 

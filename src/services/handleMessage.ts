@@ -4,10 +4,9 @@ import removeProfile from './removeProfile';
 import logger from './logger';
 
 const handleAddProfileMessage = async (payload: any) => {
-    const { dob, name, id: userId, city, country } = payload;
-    const age = helpers.getAge(dob);
+    const { name, id: userId, country } = payload;
     const userName = helpers.generateUserName(name);
-    const insertDoc = { age, name, userId, userName, city, country };
+    const insertDoc = { name, userId, userName, country };
     const res = await addProfile(insertDoc);
     if (!res) {
         throw new Error('Add Profile Failed');
