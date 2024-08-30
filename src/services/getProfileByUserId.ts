@@ -1,10 +1,18 @@
 import { QueryResult } from 'pg';
-import { omit } from 'lodash';
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces, helpers } from '../utils';
 
-const getProfileByUserId = async (userId: number): Promise<interfaces.IGetProfileResponse | null> => {
-    const query = 'SELECT * FROM profile WHERE user_id=$1';
+const getProfileByUserId = async (userId: number) => {
+    const query = `
+      SELECT id, name, user_name, description, user_id, profile_picture, 
+      work, university, city, country, 
+      CASE 
+        WHEN dob IS NULL THEN NULL
+        ELSE EXTRACT(YEAR FROM AGE(dob))
+      END AS age 
+      FROM profile 
+      WHERE user_id=$1 WHERE deleted_at IS NULL
+    `;
     const params = [userId];
     const client = await getDbClient();
     let res: QueryResult | null = null;
@@ -17,14 +25,7 @@ const getProfileByUserId = async (userId: number): Promise<interfaces.IGetProfil
     }  
     if (res?.rows?.length) {
       const profile = res.rows[0];
-      return <interfaces.IGetProfileResponse>omit({
-        ...profile,
-        snapId: profile.snap_id,
-        igId: profile.ig_id,
-        userId: profile.user_id,
-        userName: profile.user_name,
-        profilePicture: profile.profile_picture,
-      }, ['user_id', 'snap_id', 'ig_id', 'user_name', 'profile_picture']);
+      return helpers.formatDbQueryResponse<interfaces.IGetProfileResponse>(profile);
     }
     return null;
 }

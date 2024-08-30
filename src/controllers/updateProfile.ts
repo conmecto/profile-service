@@ -22,12 +22,15 @@ const updateProfile = async (req: interfaces.IRequestObject): Promise<interfaces
     if (profileUpdateObj.name) {
         profileUpdateObj.name = profileUpdateObj.name.toLowerCase();
     } 
-    if (profileUpdateObj.userName) {
-        const checkDuplicateUserName = await checkUserName(userId, profileUpdateObj.userName);
-        if (checkDuplicateUserName) {
-            throw new CustomError(enums.StatusCodes.CONFLICT, enums.Errors.CONLFIC_USER_NAME, enums.ErrorCodes.CONLFIC_USER_NAME);
-        }
-    }
+    if (profileUpdateObj.city) {
+        profileUpdateObj.city = profileUpdateObj.city.toLowerCase();
+    } 
+    if (profileUpdateObj.work) {
+        profileUpdateObj.work = profileUpdateObj.work.toLowerCase();
+    } 
+    if (profileUpdateObj.university) {
+        profileUpdateObj.university = profileUpdateObj.university.toLowerCase();
+    } 
     //const profileCacheKey = `profile:user:${userId}`;
     const profileUpdateRes = await updateUserProfile(userId, profileUpdateObj);
     if (!profileUpdateRes) {
