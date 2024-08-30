@@ -13,14 +13,10 @@ const userHeaderSchema = Joi.object({
 
 const profileUpdateSchema = Joi.object({
     name: Joi.string().max(200).optional(),
-    userName: Joi.string().max(200).optional(),
     description: Joi.string().max(5000).optional(),
-    school: Joi.string().max(500).optional(),
+    university: Joi.string().max(500).optional(),
     work: Joi.string().max(500).optional(),
-    igId: Joi.string().max(200).optional(),
-    snapId: Joi.string().max(200).optional(),
-    city: Joi.string().max(200).optional(),
-    interests: Joi.string().max(5000).optional()
+    city: Joi.string().max(200).optional()
 });
 
 const multipleUsersProfileSchema = Joi.object({

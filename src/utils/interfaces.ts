@@ -67,12 +67,10 @@ interface IProfileUpdateObject {
     description?: string,
     city?: string,
     country?: string,
-    school?: string,
     work?: string,
-    igId?: string,
-    snapId?: string,
-    interests?: string,
     profilePicture?: string,
+    university?: string,
+    age?: number
 }
 
 interface IProfileObject extends IProfileUpdateObject, IBaseModel {
@@ -87,16 +85,9 @@ interface ICheckProfileResponse {
 
 interface ICreateProfileObject {
     userId: number,
-    description?: string,
     userName: string,
     name: string,
-    city?: string,
-    country?: string,
-    school?: string,
-    work?: string,
-    profilePicture?: string,
-    dob?: string,
-    interests?: string
+    country: string
 }
 
 interface IAddProfileResponse {
