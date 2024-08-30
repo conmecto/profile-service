@@ -11,7 +11,7 @@ const getProfileByUserId = async (userId: number) => {
         ELSE EXTRACT(YEAR FROM AGE(dob))
       END AS age 
       FROM profile 
-      WHERE user_id=$1 WHERE deleted_at IS NULL
+      WHERE user_id=$1 AND deleted_at IS NULL
     `;
     const params = [userId];
     const client = await getDbClient();
