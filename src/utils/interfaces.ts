@@ -62,14 +62,14 @@ interface IImageUploadResponse extends IGenericResponse {
 
 //Profile 
 interface IProfileUpdateObject {
-    name?: string,
+    name: string,
     userName?: string,
-    description?: string,
-    city?: string,
+    description: string,
+    city: string,
     country?: string,
-    work?: string,
+    work: string,
     profilePicture?: string,
-    university?: string,
+    university: string,
     age?: number
 }
 
@@ -174,7 +174,8 @@ interface ITokenVerifyResponse {
 interface IGenerateUploadUrlBody { 
     userId: number, 
     fileName: string, 
-    contentType: string 
+    contentType: string,
+    uploadType: string
 }
 
 interface IGetFeedPayload { 

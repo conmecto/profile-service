@@ -64,10 +64,12 @@ const checkOrCreateBucket = async (bucket: string) => {
 
 checkOrCreateBucket(Environments.aws.s3BucketPost);
 
-const generatePresignedUploadUrl = async ({ userId, fileName, contentType }: interfaces.IGenerateUploadUrlBody) => {
+const generatePresignedUploadUrl = async ({ userId, fileName, contentType, uploadType }: interfaces.IGenerateUploadUrlBody) => {
     try {
         const Bucket = Environments.aws.s3BucketPost;
-        const Key = userId + '/post/' + fileName;
+        const Key = uploadType === 'profilePicture' ? 
+            (userId + '/profile-pictures/' + fileName) : 
+            (userId + '/post/' + fileName);
         const command = new PutObjectCommand({
             Bucket,
             Key,

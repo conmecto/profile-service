@@ -1,5 +1,5 @@
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces } from '../utils';
 
 const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadata) => {
     const keys = Object.keys(metadata);
@@ -19,7 +19,6 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
     `;
     const params2 = [userId, metadata.key];
     const client = await getDbClient();
-    let res = false;
     try {
         await client.query('BEGIN');
         const fileMetaRes = await client.query(query1, params1);
@@ -29,14 +28,12 @@ const updateUserImage = async (userId: number, metadata: interfaces.IFileMetadat
         params2.push(fileMetaRes.rows[0].id);
         await client.query(query2, params2);
         await client.query('COMMIT');
-        res = true;
     } catch(err) {
         await client.query('ROLLBACK');
         throw err;
     } finally {
         client.release();
-    }  
-    return res;
+    }
 }
 
 export default updateUserImage;
