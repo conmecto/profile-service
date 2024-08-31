@@ -5,7 +5,7 @@ import updateUserProfile from './updateUserProfile';
 import checkProfileByUserAndProfileId from './checkProfileByUserAndProfileId';
 import addProfile from './addProfile';
 import getProfileByUserId from './getProfileByUserId';
-import { handleAddProfileMessage, handleAccountRemovedMessage } from './handleMessage';
+import { handleAddProfileMessage, handleAccountRemovedMessage, handleUpdateDob } from './handleMessage';
 import { getKey, getProfileCache, setKey } from './cache';
 import checkUserName from './checkUserName';
 import getMultipleProfileByUserIds from './getMultipleProfileByUserIds';
@@ -27,5 +27,5 @@ export {
     handleAddProfileMessage, getProfileByUserId, getKey, getProfileCache, setKey, checkUserName,
     getMultipleProfileByUserIds, getProfiles, updateUserImage, getUserPostsPaginated,
     deleteUserPost, reportUserPost, logger, insertPost, callProcessImage, addUploadUrlRequest,
-    getFeedByUserId, addPostReaction, handleAccountRemovedMessage, blockProfile
+    getFeedByUserId, addPostReaction, handleAccountRemovedMessage, blockProfile, handleUpdateDob
 }
