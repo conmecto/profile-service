@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { Country, SortOrder } from './enums';
-import { ALLOWED_IMAGE_TYPES } from './constants';
+import { ALLOWED_IMAGE_TYPES, ALLOWED_UPLOAD_TYPES } from './constants';
 
 const profileIdParamSchema = Joi.object({
     userId: Joi.number().required()
@@ -12,11 +12,11 @@ const userHeaderSchema = Joi.object({
 });
 
 const profileUpdateSchema = Joi.object({
-    name: Joi.string().max(200).optional(),
-    description: Joi.string().max(5000).optional(),
-    university: Joi.string().max(500).optional(),
-    work: Joi.string().max(500).optional(),
-    city: Joi.string().max(200).optional()
+    name: Joi.string().min(3).max(100).optional(),
+    description: Joi.string().min(0).max(500).optional(),
+    university: Joi.string().min(0).max(100).optional(),
+    work: Joi.string().min(0).max(100).optional(),
+    city: Joi.string().min(0).max(100).optional()
 });
 
 const multipleUsersProfileSchema = Joi.object({
@@ -65,7 +65,8 @@ const postReactionParamSchema = Joi.object({
 const generateUploadUrlSchema =  Joi.object({
     userId: Joi.number().required(),
     fileName: Joi.string().required(),
-    contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required()
+    contentType: Joi.string().valid(...ALLOWED_IMAGE_TYPES).required(),
+    uploadType: Joi.string().valid(...ALLOWED_UPLOAD_TYPES).required()
 });
 
 const addPostSchema = Joi.object({
@@ -81,6 +82,16 @@ const addPostSchema = Joi.object({
     tags: Joi.string().optional()
 });
 
+const updateProfilePictureSchema = Joi.object({
+    userId: Joi.number().required(),
+    key: Joi.string().max(1000).required(),
+    name: Joi.string().max(500).required(),
+    mimetype: Joi.string().max(500).required(),
+    size: Joi.number().required(),
+    height: Joi.number().required(),
+    width: Joi.number().required()
+});
+
 const getFeedSchema = Joi.object({
     userId: Joi.number().required(),
     page: Joi.number().required(),
@@ -90,5 +101,5 @@ const getFeedSchema = Joi.object({
 export { 
     profileUpdateSchema, profileIdParamSchema, userHeaderSchema, multipleUsersProfileSchema, searchProfilesSchema,
     userPostsQuerySchema, deletePostParamSchema, reportPostParamSchema, generateUploadUrlSchema, addPostSchema,
-    getFeedSchema, markPostsViewedParamSchema, postReactionParamSchema, blockParamSchema
+    getFeedSchema, markPostsViewedParamSchema, postReactionParamSchema, blockParamSchema, updateProfilePictureSchema
 };
