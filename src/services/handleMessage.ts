@@ -2,6 +2,7 @@ import { Environments, helpers, enums } from '../utils';
 import addProfile from './addProfile';
 import removeProfile from './removeProfile';
 import logger from './logger';
+import updateUserProfile from './updateUserProfile';
 
 const handleAddProfileMessage = async (payload: any) => {
     const { name, id: userId, country } = payload;
@@ -29,6 +30,15 @@ const handleAccountRemovedMessage = async (message: any, channel: string) => {
     }
 }
 
+const handleUpdateDob = async (payload: any) => {
+    const { userId, dob } = payload;
+    const res = await updateUserProfile(userId, { dob } as any);
+    if (!res) {
+        throw new Error('Update dob Failed');
+    }
+    return res;
+}
+
 export { 
-    handleAddProfileMessage, handleAccountRemovedMessage
+    handleAddProfileMessage, handleAccountRemovedMessage, handleUpdateDob
 }

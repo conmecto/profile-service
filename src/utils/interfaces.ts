@@ -70,7 +70,7 @@ interface IProfileUpdateObject {
     work: string,
     profilePicture?: string,
     university: string,
-    age?: number
+    dob?: Date
 }
 
 interface IProfileObject extends IProfileUpdateObject, IBaseModel {
