@@ -1,7 +1,6 @@
 import updateProfile from './updateProfile';
 import getUserProfile from './getUserProfile';
 import getMultipleUsersProfile from './getMultipleUsersProfile';
-import searchProfiles from './searchProfiles';
 import getUserPosts from './getUserPosts';
 import deletePost from './deletePost';
 import reportPost from './reportPost';
@@ -13,6 +12,6 @@ import blockUserProfile from './blockUserProfile';
 import updateProfilePicture from './updateProfilePicture';
 
 export { 
-    updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, addPost, getUserPosts,
+    updateProfile, getUserProfile, getMultipleUsersProfile, addPost, getUserPosts,
     deletePost, reportPost, generateSignedUrl, getUserFeed, updatePostReaction, blockUserProfile, updateProfilePicture
 }
