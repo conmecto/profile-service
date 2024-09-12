@@ -1,7 +1,7 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces } from '../utils'; 
 import { 
-    updateProfile, getUserProfile, getMultipleUsersProfile, searchProfiles, updateProfilePicture,
+    updateProfile, getUserProfile, getMultipleUsersProfile, updateProfilePicture,
     addPost, getUserPosts, deletePost, reportPost, generateSignedUrl, getUserFeed, updatePostReaction,
     blockUserProfile
 } from '../controllers';
@@ -189,16 +189,6 @@ profileRouter.patch('/users/:userId', authenticateRequest, async (req: Request, 
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await updateProfile(filteredRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);    
-    } catch(err) {
-        next(err);
-    }
-});
-
-profileRouter.get('', authenticateRequest, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await searchProfiles(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
