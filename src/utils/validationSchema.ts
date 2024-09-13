@@ -12,11 +12,14 @@ const userHeaderSchema = Joi.object({
 });
 
 const profileUpdateSchema = Joi.object({
-    name: Joi.string().min(3).max(100).optional(),
+    name: Joi.string().min(3).max(200).optional(),
     description: Joi.string().min(0).max(500).optional(),
-    university: Joi.string().min(0).max(100).optional(),
-    work: Joi.string().min(0).max(100).optional(),
-    city: Joi.string().min(0).max(100).optional()
+    university: Joi.string().min(0).max(200).optional(),
+    work: Joi.string().min(0).max(200).optional(),
+    city: Joi.string().min(0).max(200).optional(),
+    preferences: Joi.string().min(0).max(300).optional(),
+    traits: Joi.string().min(0).max(300).optional(),
+    lookingFor: Joi.string().min(0).max(300).optional()
 });
 
 const multipleUsersProfileSchema = Joi.object({

@@ -1,9 +1,9 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { enums, interfaces } from '../utils';
+import { interfaces, enums } from '../utils';
 
 const updateUserProfile = async (userId: number, profileObj: interfaces.IProfileUpdateObject) => {
-    const keys = Object.keys(profileObj).map((key, index) => `${key}=$${index+2}`).join(',');
+    const keys = Object.keys(profileObj).map((key, index) => `${enums.FIELDS_DB_NAME[key]}=$${index+2}`).join(',');
     const query = `
         UPDATE profile SET ${keys}
         WHERE user_id=$1 AND deleted_at IS NULL
