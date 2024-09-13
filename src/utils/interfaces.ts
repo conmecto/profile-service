@@ -63,19 +63,13 @@ interface IImageUploadResponse extends IGenericResponse {
 //Profile 
 interface IProfileUpdateObject {
     name: string,
-    userName?: string,
     description: string,
     city: string,
-    country?: string,
     work: string,
-    profilePicture?: string,
     university: string,
-    dob?: Date
-}
-
-interface IProfileObject extends IProfileUpdateObject, IBaseModel {
-    userId: number,
-    name: string
+    preferences: string,
+	traits: string,
+	lookingFor: string
 }
 
 interface ICheckProfileResponse {
@@ -94,8 +88,18 @@ interface IAddProfileResponse {
     profileId: number
 }
 
-interface IGetProfileResponse extends IProfileObject {
-    id: number
+interface IGetProfileResponse {
+    id: number,
+    name: string,
+    description: string,
+    city: string,
+    work: string,
+    university: string,
+    age?: number,
+    preferences: string,
+	traits: string,
+	lookingFor: string,
+    profilePicture: string
 }
 
 interface ICacheProfileValue extends IGetProfileResponse {}
@@ -186,7 +190,7 @@ interface IGetFeedPayload {
 
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, IStorageObject, IImageUploadResponse, IProfileUpdateObject,
-    IProfileObject, ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
+    ICreateProfileObject, IAddProfileResponse, ICreateImageUploadUrlBody, IGetProfileResponse, IAddImageMetadata,
     ICacheProfileValue, ICheckProfileResponse, ICustomerRequest, IGetMultipleProfiles, ISearchProfileFilterObj, IFileMetadata,
     IPaginationOptions, IPostDetail, ITokenVerifyResponse, IGenerateUploadUrlBody, IGetFeedPayload
 };

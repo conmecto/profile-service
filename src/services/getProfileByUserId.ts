@@ -4,8 +4,8 @@ import { interfaces, helpers } from '../utils';
 
 const getProfileByUserId = async (userId: number) => {
     const query = `
-      SELECT id, name, user_name, description, user_id, profile_picture, 
-      work, university, city, country, 
+      SELECT id, name, description, user_id, profile_picture,
+      work, university, city, country, looking_for, preferences, traits, 
       CASE 
         WHEN dob IS NULL THEN NULL
         ELSE EXTRACT(YEAR FROM AGE(dob))

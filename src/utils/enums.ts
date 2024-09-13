@@ -135,3 +135,14 @@ export enum ErrorCodes {
 
     INTERNAL_SERVER = 'INTERNAL_SERVER',
 }
+
+export enum FIELDS_DB_NAME {
+    'name' = 'name',
+    'description' = 'description',
+    'city' = 'city',
+    'work' = 'work',
+    'university' = 'university',
+    'preferences' = 'preferences',
+	'traits' = 'traits',
+	'lookingFor' = 'looking_for'
+}

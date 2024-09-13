@@ -1,7 +1,7 @@
 import { interfaces, enums, validationSchema } from '../utils';
 import { CustomError, getProfileByUserId } from '../services';
 
-const getUserProfile = async (req: interfaces.IRequestObject): Promise<interfaces.IGetProfileResponse> => {
+const getUserProfile = async (req: interfaces.IRequestObject) => {
     await validationSchema.profileIdParamSchema.validateAsync(req.params);
     const userId = Number(req.params['userId']);
     const profile = await getProfileByUserId(userId);
