@@ -144,5 +144,6 @@ export enum FIELDS_DB_NAME {
     'university' = 'university',
     'preferences' = 'preferences',
 	'traits' = 'traits',
-	'lookingFor' = 'looking_for'
+	'lookingFor' = 'looking_for',
+    'dob' = 'dob'
 }
